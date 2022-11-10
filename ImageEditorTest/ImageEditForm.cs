@@ -1,4 +1,6 @@
-﻿namespace ImageEditorTest
+﻿using System.Drawing.Imaging;
+
+namespace ImageEditorTest
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     public partial class ImageEditForm : Form, IDisposable
@@ -23,8 +25,16 @@
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            var img = pictureBox1.Image;
-            img.Save(_imagePath);
+            var currentImg = pictureBox1.Image;
+
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.FileName= "croped_image";
+            sf.Filter = "JPG(*.JPG)|*.jpg";
+
+            if (sf.ShowDialog() == DialogResult.OK)
+            {
+                currentImg.Save(sf.FileName);
+            }
         }
 
         private void checkBoxCrop_CheckedChanged(object sender, EventArgs e)
@@ -61,7 +71,6 @@
 
         private void CropImage(Rectangle rect)
         {
-            //var currentImg = pictureBox1.Image as Bitmap;
             Bitmap currentImg = new(pictureBox1.Image,
                                              pictureBox1.Width,
                                              pictureBox1.Height);
