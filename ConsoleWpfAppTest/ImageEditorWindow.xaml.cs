@@ -124,6 +124,21 @@ namespace ConsoleWpfAppTest
 
         private void Crop()
         {
+            Bitmap bmp = new Bitmap(OriginalImage);
+
+            try
+            {
+                EditedImage =
+                    bmp.Clone(
+                        new Rectangle((int)cropRectangle.RadiusX, (int)cropRectangle.RadiusY, (int)cropRectangle.Width,
+                            (int)cropRectangle.Height), bmp.PixelFormat);
+                ;
+                img.Source = BitmapToSource(EditedImage);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Cropping error!");
+            }
         }
 
         private void Reset()

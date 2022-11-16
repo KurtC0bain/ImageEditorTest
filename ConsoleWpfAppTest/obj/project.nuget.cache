@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GCYX9896Nx1yddRZMEu4zs2ha1ME5qb6BIkTjOWBS6X7L2Y0NzNgZN5hYmd5m4954/kAjAH9dT2hnDADSgPzQA==",
+  "dgSpecHash": "c7RsyYr1aoNMbDzV+SoYkXmRZJm9pDsB3XXa+KPXZm0IXReQa/GysDB3rZEV2SrNNDaomEH6884YIWWNNBKm8w==",
   "success": true,
-  "projectFilePath": "D:\\UNITY-BARS\\repos\\ConsoleWpfAppTest\\ConsoleWpfAppTest\\ConsoleWpfAppTest\\ConsoleWpfAppTest.csproj",
+  "projectFilePath": "D:\\UNITY-BARS\\repos\\ImageEditorTest\\ImageEditorTest\\ConsoleWpfAppTest\\ConsoleWpfAppTest.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\esusm\\.nuget\\packages\\microsoft.win32.systemevents\\7.0.0\\microsoft.win32.systemevents.7.0.0.nupkg.sha512",
     "C:\\Users\\esusm\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512",

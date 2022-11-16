@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\UNITY-BARS\\repos\\ConsoleWpfAppTest\\ConsoleWpfAppTest\\ConsoleWpfAppTest\\ConsoleWpfAppTest.csproj": {}
+    "D:\\UNITY-BARS\\repos\\ImageEditorTest\\ImageEditorTest\\ConsoleWpfAppTest\\ConsoleWpfAppTest.csproj": {}
   },
   "projects": {
-    "D:\\UNITY-BARS\\repos\\ConsoleWpfAppTest\\ConsoleWpfAppTest\\ConsoleWpfAppTest\\ConsoleWpfAppTest.csproj": {
+    "D:\\UNITY-BARS\\repos\\ImageEditorTest\\ImageEditorTest\\ConsoleWpfAppTest\\ConsoleWpfAppTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\UNITY-BARS\\repos\\ConsoleWpfAppTest\\ConsoleWpfAppTest\\ConsoleWpfAppTest\\ConsoleWpfAppTest.csproj",
+        "projectUniqueName": "D:\\UNITY-BARS\\repos\\ImageEditorTest\\ImageEditorTest\\ConsoleWpfAppTest\\ConsoleWpfAppTest.csproj",
         "projectName": "ConsoleWpfAppTest",
-        "projectPath": "D:\\UNITY-BARS\\repos\\ConsoleWpfAppTest\\ConsoleWpfAppTest\\ConsoleWpfAppTest\\ConsoleWpfAppTest.csproj",
+        "projectPath": "D:\\UNITY-BARS\\repos\\ImageEditorTest\\ImageEditorTest\\ConsoleWpfAppTest\\ConsoleWpfAppTest.csproj",
         "packagesPath": "C:\\Users\\esusm\\.nuget\\packages\\",
-        "outputPath": "D:\\UNITY-BARS\\repos\\ConsoleWpfAppTest\\ConsoleWpfAppTest\\ConsoleWpfAppTest\\obj\\",
+        "outputPath": "D:\\UNITY-BARS\\repos\\ImageEditorTest\\ImageEditorTest\\ConsoleWpfAppTest\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\esusm\\AppData\\Roaming\\NuGet\\NuGet.Config",
