@@ -100,7 +100,12 @@ namespace ConsoleWpfAppTest
             }
 
             _editedImage = bmp;
+
             Img.Source = BitmapToSource(_editedImage);
+            this.UpdateLayout();
+
+            AdornerLayer.GetAdornerLayer(Img).Remove(_service.Adorner);
+            _service = new(Img);
         }
 
         private void Crop()
