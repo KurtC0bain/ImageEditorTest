@@ -18,18 +18,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="img\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
 	  <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="img\img1.jpg">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
+	  <Reference Include="CroppingImageLibrary">
+	    <HintPath>..\CroppingImageLibrary.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 </Project>

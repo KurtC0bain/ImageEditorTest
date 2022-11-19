@@ -27,7 +27,6 @@ D:\UNITY-BARS\repos\ConsoleWpfAppTest\ConsoleWpfAppTest\ConsoleWpfAppTest\bin\De
 D:\UNITY-BARS\repos\ConsoleWpfAppTest\ConsoleWpfAppTest\ConsoleWpfAppTest\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
 D:\UNITY-BARS\repos\ConsoleWpfAppTest\ConsoleWpfAppTest\ConsoleWpfAppTest\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 D:\UNITY-BARS\repos\ConsoleWpfAppTest\ConsoleWpfAppTest\ConsoleWpfAppTest\obj\Debug\net6.0-windows\ConsoleWpfAppTest.csproj.ResolveComReference.cache
-D:\UNITY-BARS\repos\ImageEditorTest\ImageEditorTest\ConsoleWpfAppTest\bin\Debug\net6.0-windows\img\img1.jpg
 D:\UNITY-BARS\repos\ImageEditorTest\ImageEditorTest\ConsoleWpfAppTest\bin\Debug\net6.0-windows\ConsoleWpfAppTest.exe
 D:\UNITY-BARS\repos\ImageEditorTest\ImageEditorTest\ConsoleWpfAppTest\bin\Debug\net6.0-windows\ConsoleWpfAppTest.deps.json
 D:\UNITY-BARS\repos\ImageEditorTest\ImageEditorTest\ConsoleWpfAppTest\bin\Debug\net6.0-windows\ConsoleWpfAppTest.runtimeconfig.json
@@ -56,3 +55,4 @@ D:\UNITY-BARS\repos\ImageEditorTest\ImageEditorTest\ConsoleWpfAppTest\obj\Debug\
 D:\UNITY-BARS\repos\ImageEditorTest\ImageEditorTest\ConsoleWpfAppTest\obj\Debug\net6.0-windows\ConsoleWpfAppTest.pdb
 D:\UNITY-BARS\repos\ImageEditorTest\ImageEditorTest\ConsoleWpfAppTest\obj\Debug\net6.0-windows\ConsoleWpfAppTest.genruntimeconfig.cache
 D:\UNITY-BARS\repos\ImageEditorTest\ImageEditorTest\ConsoleWpfAppTest\obj\Debug\net6.0-windows\ref\ConsoleWpfAppTest.dll
+D:\UNITY-BARS\repos\ImageEditorTest\ImageEditorTest\ConsoleWpfAppTest\bin\Debug\net6.0-windows\CroppingImageLibrary.dll

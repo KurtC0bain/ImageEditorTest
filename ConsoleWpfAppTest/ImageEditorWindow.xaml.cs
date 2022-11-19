@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -8,6 +9,13 @@ using System.IO;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Microsoft.Win32;
+using Point = System.Windows.Point;
+using System.Reflection;
+using CroppingImageLibrary;
+using CroppingImageLibrary.Services;
+using System.Globalization;
+using Size = System.Windows.Size;
+using Microsoft.VisualBasic;
 
 namespace ConsoleWpfAppTest
 {
@@ -16,34 +24,31 @@ namespace ConsoleWpfAppTest
     /// </summary>
     public partial class ImageEditorWindow : Window
     {
-        private readonly Bitmap OriginalImage;
-        private Bitmap EditedImage;
+        private readonly Bitmap _originalImage;
+        private Bitmap _editedImage;
 
-        private readonly Adorner _resizeAdorner;
-        private readonly Uri _imagePath;
+        private CropService? _service;
 
-        private int angle = 0;
-        private bool initializeResizer = true;
+        private int _angle;
 
         public ImageEditorWindow(Uri imagePath)
         {
             InitializeComponent();
-            _resizeAdorner = new ResizeAdorner(cropRectangle);
-            _imagePath = imagePath;
 
-            OriginalImage = new Bitmap(imagePath.AbsolutePath);
-            EditedImage = new Bitmap(OriginalImage);
-            img.Source = BitmapToSource(new Bitmap(OriginalImage));
+            _originalImage = new Bitmap(imagePath.AbsolutePath);
+
+            _editedImage = new Bitmap(_originalImage);
+            Img.Source = BitmapToSource(new Bitmap(_editedImage));
         }
 
         private static BitmapImage BitmapToSource(Bitmap src)
         {
-            System.IO.MemoryStream ms = new System.IO.MemoryStream();
+            MemoryStream ms = new MemoryStream();
             src.Save(ms, ImageFormat.Jpeg);
 
             BitmapImage image = new BitmapImage();
             image.BeginInit();
-            ms.Seek(0, System.IO.SeekOrigin.Begin);
+            ms.Seek(0, SeekOrigin.Begin);
             image.StreamSource = ms;
             image.EndInit();
             return image;
@@ -51,7 +56,7 @@ namespace ConsoleWpfAppTest
 
         protected override void OnContentRendered(EventArgs e)
         {
-            CropVisibilityChange();
+            _service = new(Img);
             base.OnContentRendered(e);
         }
 
@@ -63,49 +68,34 @@ namespace ConsoleWpfAppTest
         private void Reset_Click(object sender, RoutedEventArgs e) => Reset();
 
         private void Save_Click(object sender, RoutedEventArgs e) => Save();
-
-        private void CropVisibilityChange()
-        {
-            if (initializeResizer)
-            {
-                cropRectangle.Visibility = Visibility.Visible;
-                AdornerLayer.GetAdornerLayer(img).Add(_resizeAdorner);
-
-                cropRectangle.Height = img.ActualHeight - 5;
-                cropRectangle.Width = img.ActualWidth - 5;
-
-                initializeResizer = false;
-            }
-        }
-
         private void RotateImage(int angle)
         {
             if (angle == -90)
             {
-                if (this.angle <= 0)
+                if (this._angle <= 0)
                 {
-                    this.angle = 270;
+                    this._angle = 270;
                 }
                 else
                 {
-                    this.angle -= 90;
+                    this._angle -= 90;
                 }
             }
             else if (angle == 90)
             {
-                if (this.angle >= 270)
+                if (this._angle >= 270)
                 {
-                    this.angle = 0;
+                    this._angle = 0;
                 }
                 else
                 {
-                    this.angle += 90;
+                    this._angle += 90;
                 }
             }
 
-            Bitmap bmp = new Bitmap(OriginalImage);
+            Bitmap bmp = new Bitmap(_originalImage);
 
-            switch (this.angle)
+            switch (this._angle)
             {
                 case 90:
                     bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
@@ -118,40 +108,56 @@ namespace ConsoleWpfAppTest
                     break;
             }
 
-            EditedImage = bmp;
-            img.Source = BitmapToSource(EditedImage);
+            _editedImage = bmp;
+            Img.Source = BitmapToSource(_editedImage);
         }
 
         private void Crop()
         {
-            Bitmap bmp = new Bitmap(OriginalImage);
+            var cropArea = _service.GetCroppedArea();
 
-            try
+            System.Drawing.Rectangle cropRect = new System.Drawing.Rectangle((int)cropArea.CroppedRectAbsolute.X,
+                (int)cropArea.CroppedRectAbsolute.Y, (int)cropArea.CroppedRectAbsolute.Width,
+                (int)cropArea.CroppedRectAbsolute.Height);
+
+            Bitmap target = new Bitmap(cropRect.Width, cropRect.Height);
+
+            using (Graphics g = Graphics.FromImage(target))
             {
-                EditedImage =
-                    bmp.Clone(
-                        new Rectangle((int)cropRectangle.RadiusX, (int)cropRectangle.RadiusY, (int)cropRectangle.Width,
-                            (int)cropRectangle.Height), bmp.PixelFormat);
-                ;
-                img.Source = BitmapToSource(EditedImage);
+                g.DrawImage(_originalImage, new System.Drawing.Rectangle(0, 0, target.Width, target.Height),
+                    cropRect,
+                    GraphicsUnit.Pixel);
             }
-            catch (Exception)
+
+            SaveFileDialog dlg = new SaveFileDialog
             {
-                MessageBox.Show("Cropping error!");
-            }
+                FileName = "TestCropping",          
+                DefaultExt = ".png",                  
+                Filter = "Image png (.png)|*.png" 
+            };
+
+            bool? result = dlg.ShowDialog();
+
+            if (result != true)
+                return;
+
+            string filename = dlg.FileName;
+            target.Save(filename);
+
+            _editedImage = target;
+            Img.Source = BitmapToSource(_editedImage);
         }
+    
 
         private void Reset()
         {
-            do
-            {
-                RotateImage(90);
-            } while (this.angle != 0);
+            Img.Source = BitmapToSource(new Bitmap(_originalImage));
+            this._angle = 0;
         }
 
         private void Save()
         {
-            BitmapImage bi = (BitmapImage)img.Source;
+            BitmapImage bi = (BitmapImage)Img.Source;
             SaveFileDialog save = new()
             {
                 Title = "Save picture as ",
@@ -167,6 +173,5 @@ namespace ConsoleWpfAppTest
             }
 
         }
-
     }
 }
