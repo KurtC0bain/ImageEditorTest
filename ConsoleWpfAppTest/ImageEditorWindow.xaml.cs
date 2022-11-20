@@ -59,7 +59,9 @@ namespace ConsoleWpfAppTest
         private void Reset_Click(object sender, RoutedEventArgs e) => Reset();
 
         private void Save_Click(object sender, RoutedEventArgs e) => Save();
-        private void RotateImage(int angle)
+
+
+        private void ChangeAngle(int angle)
         {
             if (angle == -90)
             {
@@ -83,23 +85,27 @@ namespace ConsoleWpfAppTest
                     this._angle += 90;
                 }
             }
+        }
 
-            var bmp = new Bitmap(_originalImage);
+        private void RotateImage(int angle)
+        {
+            ChangeAngle(angle);
 
-            switch (this._angle)
+            switch (angle)
             {
                 case 90:
-                    bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                    _editedImage.RotateFlip(RotateFlipType.Rotate90FlipNone);
                     break;
-                case 180:
-                    bmp.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                case -90:
+                    _editedImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                    break;
+/*                case 180:
+                    _editedImage.RotateFlip(RotateFlipType.Rotate180FlipNone);
                     break;
                 case 270:
-                    bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                    _editedImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
                     break;
-            }
-
-            _editedImage = bmp;
+*/            }
 
             Img.Source = BitmapToSource(_editedImage);
             this.UpdateLayout();
@@ -110,45 +116,51 @@ namespace ConsoleWpfAppTest
 
         private void Crop()
         {
-            var cropArea = _service!.GetCroppedArea();
-
-            var cropRect = new Rectangle((int)cropArea.CroppedRectAbsolute.X,
-                (int)cropArea.CroppedRectAbsolute.Y, (int)cropArea.CroppedRectAbsolute.Width,
-                (int)cropArea.CroppedRectAbsolute.Height);
-
-            var target = new Bitmap(cropRect.Width, cropRect.Height);
-
-            using (var g = Graphics.FromImage(target))
+            try
             {
-                g.DrawImage(_originalImage, new System.Drawing.Rectangle(0, 0, target.Width, target.Height),
-                    cropRect,
-                    GraphicsUnit.Pixel);
+                var cropArea = _service!.GetCroppedArea();
+
+                var cropRect = new Rectangle((int)cropArea.CroppedRectAbsolute.X,
+                    (int)cropArea.CroppedRectAbsolute.Y, (int)cropArea.CroppedRectAbsolute.Width,
+                    (int)cropArea.CroppedRectAbsolute.Height);
+
+                var target = new Bitmap(cropRect.Width, cropRect.Height);
+
+                using (var g = Graphics.FromImage(target))
+                {
+                    g.DrawImage(_editedImage, new System.Drawing.Rectangle(0, 0, target.Width, target.Height),
+                        cropRect,
+                        GraphicsUnit.Pixel);
+                }
+
+                _editedImage = new Bitmap(target);
+                Img.Source = BitmapToSource(_editedImage);
+
+                this.UpdateLayout();
+
+                AdornerLayer.GetAdornerLayer(Img).Remove(_service.Adorner);
+                _service = new(Img);
+
+
             }
-
-            var dlg = new SaveFileDialog
+            catch (Exception e)
             {
-                FileName = "TestCropping",
-                DefaultExt = ".png",
-                Filter = "Image png (.png)|*.png"
-            };
-
-            bool? result = dlg.ShowDialog();
-
-            if (result != true)
-                return;
-
-            string filename = dlg.FileName;
-            target.Save(filename);
-
-            _editedImage = target;
-            Img.Source = BitmapToSource(_editedImage);
+                MessageBox.Show("Crop error!");
+            }
         }
 
 
         private void Reset()
         {
-            Img.Source = BitmapToSource(new Bitmap(_originalImage));
+            _editedImage = new Bitmap(_originalImage);
             this._angle = 0;
+            Img.Source = BitmapToSource(new Bitmap(_editedImage));
+
+            this.UpdateLayout();
+
+            AdornerLayer.GetAdornerLayer(Img).Remove(_service.Adorner);
+            _service = new(Img);
+
         }
 
         private void Save()
@@ -167,7 +179,6 @@ namespace ConsoleWpfAppTest
                 using Stream stm = File.Create(save.FileName);
                 jpg.Save(stm);
             }
-
         }
     }
 }
