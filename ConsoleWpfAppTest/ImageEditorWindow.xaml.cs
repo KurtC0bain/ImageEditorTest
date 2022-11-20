@@ -1,21 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Windows.Documents;
-using System.Windows.Media;
 using Microsoft.Win32;
-using Point = System.Windows.Point;
-using System.Reflection;
-using CroppingImageLibrary;
 using CroppingImageLibrary.Services;
-using System.Globalization;
-using Size = System.Windows.Size;
-using Microsoft.VisualBasic;
+using System.Windows.Documents;
 
 namespace ConsoleWpfAppTest
 {
@@ -43,10 +33,10 @@ namespace ConsoleWpfAppTest
 
         private static BitmapImage BitmapToSource(Bitmap src)
         {
-            MemoryStream ms = new MemoryStream();
+            var ms = new MemoryStream();
             src.Save(ms, ImageFormat.Jpeg);
 
-            BitmapImage image = new BitmapImage();
+            var image = new BitmapImage();
             image.BeginInit();
             ms.Seek(0, SeekOrigin.Begin);
             image.StreamSource = ms;
@@ -57,6 +47,7 @@ namespace ConsoleWpfAppTest
         protected override void OnContentRendered(EventArgs e)
         {
             _service = new(Img);
+
             base.OnContentRendered(e);
         }
 
@@ -93,7 +84,7 @@ namespace ConsoleWpfAppTest
                 }
             }
 
-            Bitmap bmp = new Bitmap(_originalImage);
+            var bmp = new Bitmap(_originalImage);
 
             switch (this._angle)
             {
@@ -109,31 +100,36 @@ namespace ConsoleWpfAppTest
             }
 
             _editedImage = bmp;
+
             Img.Source = BitmapToSource(_editedImage);
+            this.UpdateLayout();
+
+            AdornerLayer.GetAdornerLayer(Img).Remove(_service.Adorner);
+            _service = new(Img);
         }
 
         private void Crop()
         {
-            var cropArea = _service.GetCroppedArea();
+            var cropArea = _service!.GetCroppedArea();
 
-            System.Drawing.Rectangle cropRect = new System.Drawing.Rectangle((int)cropArea.CroppedRectAbsolute.X,
+            var cropRect = new Rectangle((int)cropArea.CroppedRectAbsolute.X,
                 (int)cropArea.CroppedRectAbsolute.Y, (int)cropArea.CroppedRectAbsolute.Width,
                 (int)cropArea.CroppedRectAbsolute.Height);
 
-            Bitmap target = new Bitmap(cropRect.Width, cropRect.Height);
+            var target = new Bitmap(cropRect.Width, cropRect.Height);
 
-            using (Graphics g = Graphics.FromImage(target))
+            using (var g = Graphics.FromImage(target))
             {
                 g.DrawImage(_originalImage, new System.Drawing.Rectangle(0, 0, target.Width, target.Height),
                     cropRect,
                     GraphicsUnit.Pixel);
             }
 
-            SaveFileDialog dlg = new SaveFileDialog
+            var dlg = new SaveFileDialog
             {
-                FileName = "TestCropping",          
-                DefaultExt = ".png",                  
-                Filter = "Image png (.png)|*.png" 
+                FileName = "TestCropping",
+                DefaultExt = ".png",
+                Filter = "Image png (.png)|*.png"
             };
 
             bool? result = dlg.ShowDialog();
@@ -147,7 +143,7 @@ namespace ConsoleWpfAppTest
             _editedImage = target;
             Img.Source = BitmapToSource(_editedImage);
         }
-    
+
 
         private void Reset()
         {
