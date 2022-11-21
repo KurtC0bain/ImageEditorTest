@@ -99,13 +99,7 @@ namespace ConsoleWpfAppTest
                 case -90:
                     _editedImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
                     break;
-/*                case 180:
-                    _editedImage.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                    break;
-                case 270:
-                    _editedImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                    break;
-*/            }
+            }
 
             Img.Source = BitmapToSource(_editedImage);
             this.UpdateLayout();
