@@ -110,7 +110,7 @@ namespace ConsoleWpfAppTest
             Img.Source = BitmapToSource(_editedImage);
             this.UpdateLayout();
 
-            AdornerLayer.GetAdornerLayer(Img).Remove(_service.Adorner);
+            AdornerLayer.GetAdornerLayer(Img)?.Remove(_service.Adorner);
             _service = new(Img);
         }
 
@@ -120,9 +120,14 @@ namespace ConsoleWpfAppTest
             {
                 var cropArea = _service!.GetCroppedArea();
 
-                var cropRect = new Rectangle((int)cropArea.CroppedRectAbsolute.X,
-                    (int)cropArea.CroppedRectAbsolute.Y, (int)cropArea.CroppedRectAbsolute.Width,
-                    (int)cropArea.CroppedRectAbsolute.Height);
+                var coef = Img.Source.Height / cropArea.OriginalSize.Height;
+
+                int realHeight = (int)(cropArea.CroppedRectAbsolute.Height * coef);
+                int realWidth = (int)(cropArea.CroppedRectAbsolute.Width * coef);
+
+                var cropRect = new Rectangle((int)(cropArea.CroppedRectAbsolute.TopLeft.X * coef),
+                    (int)(cropArea.CroppedRectAbsolute.TopLeft.Y * coef), realWidth,
+                    realHeight);
 
                 var target = new Bitmap(cropRect.Width, cropRect.Height);
 
@@ -138,7 +143,7 @@ namespace ConsoleWpfAppTest
 
                 this.UpdateLayout();
 
-                AdornerLayer.GetAdornerLayer(Img).Remove(_service.Adorner);
+                AdornerLayer.GetAdornerLayer(Img)?.Remove(_service.Adorner);
                 _service = new(Img);
 
 
