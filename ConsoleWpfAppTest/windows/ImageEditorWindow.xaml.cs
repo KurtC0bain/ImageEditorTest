@@ -31,7 +31,7 @@ namespace ConsoleWpfAppTest
             Img.Source = BitmapToSource(new Bitmap(_editedImage));
         }
 
-        private static BitmapImage BitmapToSource(Bitmap src)
+        public static BitmapImage BitmapToSource(Bitmap src)
         {
             var ms = new MemoryStream();
             src.Save(ms, ImageFormat.Jpeg);
@@ -178,6 +178,8 @@ namespace ConsoleWpfAppTest
                 using Stream stm = File.Create(save.FileName);
                 jpg.Save(stm);
             }
+            this.UpdateLayout();
+
         }
     }
 }

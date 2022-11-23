@@ -1,9 +1,13 @@
 ﻿using ConsoleWpfAppTest;
 using System.IO;
 
-var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img\\img1.jpg");
+var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img");
 
-ImageEditorHelpers.OpenDialog(new Uri(path, UriKind.Absolute));
+ThreadHelpers.FromSta(() =>
+{
+    var window = new MainWindow(new Uri(path));
+    window.ShowDialog();
+}, wait: true);
 
 
 Console.ReadLine();
