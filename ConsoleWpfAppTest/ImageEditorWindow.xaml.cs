@@ -99,18 +99,12 @@ namespace ConsoleWpfAppTest
                 case -90:
                     _editedImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
                     break;
-/*                case 180:
-                    _editedImage.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                    break;
-                case 270:
-                    _editedImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                    break;
-*/            }
+            }
 
             Img.Source = BitmapToSource(_editedImage);
             this.UpdateLayout();
 
-            AdornerLayer.GetAdornerLayer(Img).Remove(_service.Adorner);
+            AdornerLayer.GetAdornerLayer(Img)?.Remove(_service.Adorner);
             _service = new(Img);
         }
 
@@ -121,7 +115,7 @@ namespace ConsoleWpfAppTest
                 var cropArea = _service!.GetCroppedArea();
                 
                 var coef = _editedImage.Height / cropArea.OriginalSize.Height;
-
+                
                 int realHeight = (int)(cropArea.CroppedRectAbsolute.Height * coef);
                 int realWidth = (int)(cropArea.CroppedRectAbsolute.Width * coef);
 
@@ -143,7 +137,7 @@ namespace ConsoleWpfAppTest
 
                 this.UpdateLayout();
 
-                AdornerLayer.GetAdornerLayer(Img).Remove(_service.Adorner);
+                AdornerLayer.GetAdornerLayer(Img)?.Remove(_service.Adorner);
                 _service = new(Img);
 
 
