@@ -6,6 +6,10 @@ using System.IO;
 using Microsoft.Win32;
 using CroppingImageLibrary.Services;
 using System.Windows.Documents;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Resources;
+using FontFamily = System.Windows.Media.FontFamily;
 
 namespace ConsoleWpfAppTest
 {
@@ -29,6 +33,9 @@ namespace ConsoleWpfAppTest
 
             _editedImage = new Bitmap(_originalImage);
             Img.Source = BitmapToSource(new Bitmap(_editedImage));
+
+
+
         }
 
         private static BitmapImage BitmapToSource(Bitmap src)
@@ -114,7 +121,7 @@ namespace ConsoleWpfAppTest
             {
                 var cropArea = _service!.GetCroppedArea();
 
-                var coef = Img.Source.Height / cropArea.OriginalSize.Height;
+                var coef = _editedImage.Height / cropArea.OriginalSize.Height;
 
                 int realHeight = (int)(cropArea.CroppedRectAbsolute.Height * coef);
                 int realWidth = (int)(cropArea.CroppedRectAbsolute.Width * coef);

@@ -5,25 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ConsoleWpfAppTest"
         mc:Ignorable="d"
-        Title="ImageEditorWindow" Height="600" Width="800"
-        MinHeight="400" MinWidth="650"
+        Title="ImageEditorWindow" Height="720" Width="1135"
         ResizeMode="NoResize">
 
     <Window.Resources>
         <ResourceDictionary>
             <Style x:Key="btn" TargetType="{x:Type ButtonBase}">
                 <Setter Property="Margin" Value="2"></Setter>
-                <Setter Property="Width" Value="80"></Setter>
-                <Setter Property="Height" Value="40"></Setter>
-                <Setter Property="Background" Value="#6039AE"></Setter>
+                <Setter Property="Width" Value="99"></Setter>
+                <Setter Property="Height" Value="60"></Setter>
+                <Setter Property="Background" Value="#7955BF"></Setter>
                 <Setter Property="Foreground" Value="white"></Setter>
                 <Setter Property="FontSize" Value="20"></Setter>
             </Style>
             <Style x:Key="btnRotation" TargetType="{x:Type ButtonBase}">
                 <Setter Property="Margin" Value="2"></Setter>
-                <Setter Property="Width" Value="40"></Setter>
-                <Setter Property="Height" Value="40"></Setter>
-                <Setter Property="Background" Value="#6039AE"></Setter>
+                <Setter Property="Width" Value="60"></Setter>
+                <Setter Property="Height" Value="60"></Setter>
+                <Setter Property="Background" Value="#7955BF"></Setter>
                 <Setter Property="Foreground" Value="white"></Setter>
                 <Setter Property="FontSize" Value="20"></Setter>
             </Style>
@@ -36,26 +35,26 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
-            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <TextBox Name="titleText" BorderThickness="0" Margin="20,0,0,10" Foreground="#6241A2" FontSize="20">
+            <TextBox Name="titleText" BorderThickness="0" Margin="20,0,0,10" Foreground="#7955BF" FontSize="36" FontFamily="Montserrat Alternates" FontWeight="Bold">
                 Редагування документів
             </TextBox>
         </Grid>
 
 
-        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="100,20,100,20">
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="100,10,100,20">
             <Image x:Name="Img" Stretch="Uniform">
             </Image>
         </Grid>
 
         <Grid Grid.Row="2">
-            <Label Name="labelPath" Foreground="Black" Grid.Column="0" Margin="13,0,0,0" Width="60" HorizontalAlignment="Left">
+            <Label Name="labelPath" Foreground="#737373" Grid.Column="0" Margin="13,0,0,0" Width="120" HorizontalAlignment="Left" FontSize="20" FontFamily="Montserrat Alternates" FontWeight="Medium">
                 <Label.Content>
                     <Binding ElementName="Img" Path="Source" Converter="{StaticResource ResourceKey=imgSizeConverter}" />
                 </Label.Content>
@@ -66,47 +65,59 @@
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="Auto" MinWidth="596"></ColumnDefinition>
+                <ColumnDefinition Width="Auto" MinWidth="907"></ColumnDefinition>
                 <ColumnDefinition Width="0*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
 
             <UniformGrid Columns="5" Grid.Column="1">
-                <Button Content="R-" Style="{StaticResource btnRotation}" Click="RotateMinus90_Click" Margin="52,15,21,15">
+                <Button Style="{StaticResource btnRotation}" Click="RotateMinus90_Click" Margin="101,20,4,20">
                     <Button.Resources>
                         <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"></Setter>
+                            <Setter Property="CornerRadius" Value="8"></Setter>
+                        </Style>
+                    </Button.Resources>
+                    <Image Source="/icons/rotate-ccw.png">
+                    </Image>
+                </Button>
+                <Button Style="{StaticResource btnRotation}" Click="RotatePlus90_Click" Margin="-6,20,101,20">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="8"></Setter>
+                        </Style>
+                    </Button.Resources>
+                    <Image Source="pack://application:,,,/icons/rotate-cw.png">
+                    </Image>
+                </Button>
+                <Button Content="Crop" Style="{StaticResource btn}" Click="CropImage_Click" Margin="-127,20,147,20">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="8"></Setter>
                         </Style>
                     </Button.Resources>
                 </Button>
-                <Button Content="R+" Style="{StaticResource btnRotation}" Click="RotatePlus90_Click" Margin="-19,15,84,15">
+                <Button Content="Reset" Style="{StaticResource btn}" Click="Reset_Click" Width="99" Margin="-49,20,131,20">
                     <Button.Resources>
                         <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"></Setter>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button Content="Crop" Style="{StaticResource btn}" Click="CropImage_Click" Margin="-86,15,105,15">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"></Setter>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button Content="Reset" Style="{StaticResource btn}" Click="Reset_Click" Width="NaN" Margin="-36,15,76,15">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"></Setter>
+                            <Setter Property="CornerRadius" Value="8"></Setter>
                         </Style>
                     </Button.Resources>
 
                 </Button>
-                <Button Content="Save" Style="{StaticResource btn}" Click="Save_Click" Width="NaN" Background="#55C151" Margin="-8,15,48,15">
+                <Button Click="Save_Click" Width="99" Background="#55C151" Margin="-31,20,114,20">
                     <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"></Setter>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="8"/>
                         </Style>
                     </Button.Resources>
+                    <Button.Style>
+                        <StaticResource ResourceKey="btn"/>
+                    </Button.Style>
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock>Save</TextBlock>
+                        <Image Source="icons/download.png"/>
+                    </StackPanel>
+
                 </Button>
 
             </UniformGrid>
