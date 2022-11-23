@@ -119,10 +119,15 @@ namespace ConsoleWpfAppTest
             try
             {
                 var cropArea = _service!.GetCroppedArea();
+                
+                var coef = _editedImage.Height / cropArea.OriginalSize.Height;
 
-                var cropRect = new Rectangle((int)cropArea.CroppedRectAbsolute.X,
-                    (int)cropArea.CroppedRectAbsolute.Y, (int)cropArea.CroppedRectAbsolute.Width,
-                    (int)cropArea.CroppedRectAbsolute.Height);
+                int realHeight = (int)(cropArea.CroppedRectAbsolute.Height * coef);
+                int realWidth = (int)(cropArea.CroppedRectAbsolute.Width * coef);
+
+                var cropRect = new Rectangle((int)(cropArea.CroppedRectAbsolute.TopLeft.X * coef),
+                    (int)(cropArea.CroppedRectAbsolute.TopLeft.Y * coef), realWidth,
+                    realHeight);
 
                 var target = new Bitmap(cropRect.Width, cropRect.Height);
 
