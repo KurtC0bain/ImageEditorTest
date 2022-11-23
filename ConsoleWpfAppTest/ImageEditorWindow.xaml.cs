@@ -113,9 +113,9 @@ namespace ConsoleWpfAppTest
             try
             {
                 var cropArea = _service!.GetCroppedArea();
-
-                var coef = Img.Source.Height / cropArea.OriginalSize.Height;
-
+                
+                var coef = _editedImage.Height / cropArea.OriginalSize.Height;
+                
                 int realHeight = (int)(cropArea.CroppedRectAbsolute.Height * coef);
                 int realWidth = (int)(cropArea.CroppedRectAbsolute.Width * coef);
 
