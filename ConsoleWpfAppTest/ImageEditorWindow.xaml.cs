@@ -5,7 +5,13 @@ using System.Drawing.Imaging;
 using System.IO;
 using Microsoft.Win32;
 using System.Windows.Documents;
+
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Resources;
+using FontFamily = System.Windows.Media.FontFamily;
 using CroppingImageLibrary.Services;
+
 
 namespace ConsoleWpfAppTest
 {
@@ -115,9 +121,10 @@ namespace ConsoleWpfAppTest
             try
             {
                 var cropArea = _service!.GetCroppedArea();
-                
+
                 var coef = _image.Height / cropArea.OriginalSize.Height;
                 
+
                 int realHeight = (int)(cropArea.CroppedRectAbsolute.Height * coef);
                 int realWidth = (int)(cropArea.CroppedRectAbsolute.Width * coef);
 
