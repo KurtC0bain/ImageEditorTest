@@ -13,12 +13,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Reference Include="CroppingImageLibrary">
-			<HintPath>..\CroppingImageLibrary.dll</HintPath>
-		</Reference>
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Update="img\img1.jpg">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
@@ -26,6 +20,10 @@
 
 	<ItemGroup>
 	  <Folder Include="icons\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\CroppingImageLibrary\CroppingImageLibrary.csproj" />
 	</ItemGroup>
 
 </Project>
