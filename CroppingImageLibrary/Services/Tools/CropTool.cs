@@ -16,8 +16,8 @@ namespace CroppingImageLibrary.Services.Tools
         public double TopLeftY => Canvas.GetTop(_cropShape.Shape);
         public double BottomRightX => Canvas.GetLeft(_cropShape.Shape) + _cropShape.Shape.Width;
         public double BottomRightY => Canvas.GetTop(_cropShape.Shape) + _cropShape.Shape.Height;
-        public double Height => _cropShape.Shape.Height;
-        public double Width => _cropShape.Shape.Width;
+        public int Height => (int)_cropShape.Shape.Height;
+        public int Width => (int)_cropShape.Shape.Width;
 
         public CropTool(Canvas canvas)
         {

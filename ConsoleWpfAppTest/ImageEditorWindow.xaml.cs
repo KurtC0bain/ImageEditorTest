@@ -33,18 +33,6 @@ namespace ConsoleWpfAppTest
 
 
 
-        private static BitmapImage BitmapToSource(Bitmap src)
-        {
-            var ms = new MemoryStream();
-            src.Save(ms, ImageFormat.Jpeg);
-
-            var image = new BitmapImage();
-            image.BeginInit();
-            ms.Seek(0, SeekOrigin.Begin);
-            image.StreamSource = ms;
-            image.EndInit();
-            return image;
-        }
 
         protected override void OnContentRendered(EventArgs e)
         {
@@ -107,7 +95,6 @@ namespace ConsoleWpfAppTest
 
             UpdateCropServiceView();
         }
-
 
         private void Crop()
         {
@@ -192,6 +179,20 @@ namespace ConsoleWpfAppTest
             AdornerLayer.GetAdornerLayer(Img)?.Remove(_service.Adorner);
             _service = new(Img);
         }
+
+        private static BitmapImage BitmapToSource(Bitmap src)
+        {
+            var ms = new MemoryStream();
+            src.Save(ms, ImageFormat.Jpeg);
+
+            var image = new BitmapImage();
+            image.BeginInit();
+            ms.Seek(0, SeekOrigin.Begin);
+            image.StreamSource = ms;
+            image.EndInit();
+            return image;
+        }
+
 
     }
 }
