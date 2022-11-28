@@ -8,6 +8,7 @@
         Title="ImageEditorWindow" Height="720" Width="1135"
         ResizeMode="NoResize">
 
+
     <Window.Resources>
         <ResourceDictionary>
             <Style x:Key="btn" TargetType="{x:Type ButtonBase}">
