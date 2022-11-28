@@ -14,16 +14,18 @@ namespace ConsoleWpfAppTest
     /// </summary>
     public partial class ImageEditorWindow : Window
     {
-        private readonly Uri _path;
-
-        private Bitmap _image;
-
         private CropService? _service;
 
+        private readonly Uri _path;
+        private Bitmap _image;
         private int _angle;
+        private bool _isSaved = true;
+
 
         public ImageEditorWindow(Uri imagePath)
         {
+            Closing += OnWindowClosing;
+
             InitializeComponent();
 
             _path = imagePath;
@@ -33,13 +35,6 @@ namespace ConsoleWpfAppTest
 
 
 
-
-        protected override void OnContentRendered(EventArgs e)
-        {
-            _service = new(Img);
-            base.OnContentRendered(e);
-        }
-
         private void CropImage_Click(object sender, RoutedEventArgs e) => Crop();
 
         private void RotateMinus90_Click(object sender, RoutedEventArgs e) => RotateImage(-90);
@@ -48,6 +43,25 @@ namespace ConsoleWpfAppTest
         private void Reset_Click(object sender, RoutedEventArgs e) => Reset();
 
         private void Save_Click(object sender, RoutedEventArgs e) => Save();
+
+        private void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!_isSaved)
+            {
+                if (MessageBox.Show("Exit without saving?",
+                        "Close",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    e.Cancel = true;
+                    Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    Save();
+                }
+            }
+        }
 
 
         private void ChangeAngle(int angle)
@@ -125,9 +139,7 @@ namespace ConsoleWpfAppTest
 
                 this.UpdateLayout();
 
-                AdornerLayer.GetAdornerLayer(Img)?.Remove(_service.Adorner);
-                _service = new(Img);
-
+                UpdateCropServiceView();
 
             }
             catch (Exception e)
@@ -136,16 +148,13 @@ namespace ConsoleWpfAppTest
             }
         }
 
-
         private void Reset()
         {
             SetImage(_path);
             this._angle = 0;
 
             this.UpdateLayout();
-
-            AdornerLayer.GetAdornerLayer(Img).Remove(_service.Adorner);
-            _service = new(Img);
+            UpdateCropServiceView();
 
         }
 
@@ -165,6 +174,16 @@ namespace ConsoleWpfAppTest
                 using Stream stm = File.Create(save.FileName);
                 jpg.Save(stm);
             }
+
+
+            _isSaved = false;
+        }
+
+
+        protected override void OnContentRendered(EventArgs e)
+        {
+            _service = new(Img);
+            base.OnContentRendered(e);
         }
 
         private void SetImage(Uri imagePath)
@@ -178,6 +197,7 @@ namespace ConsoleWpfAppTest
         {
             AdornerLayer.GetAdornerLayer(Img)?.Remove(_service.Adorner);
             _service = new(Img);
+            _isSaved = false;
         }
 
         private static BitmapImage BitmapToSource(Bitmap src)
