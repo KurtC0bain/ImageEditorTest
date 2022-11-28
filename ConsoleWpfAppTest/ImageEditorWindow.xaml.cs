@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -44,51 +45,10 @@ namespace ConsoleWpfAppTest
 
         private void Save_Click(object sender, RoutedEventArgs e) => Save();
 
-        private void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (!_isSaved)
-            {
-                if (MessageBox.Show("Exit without saving?",
-                        "Close",
-                        MessageBoxButton.YesNo,
-                        MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    e.Cancel = true;
-                    Visibility = Visibility.Hidden;
-                }
-                else
-                {
-                    Save();
-                }
-            }
-        }
+        private void OnWindowClosing(object sender, CancelEventArgs e) => ExitWithoutSaving(e);
 
 
-        private void ChangeAngle(int angle)
-        {
-            if (angle == -90)
-            {
-                if (this._angle <= 0)
-                {
-                    this._angle = 270;
-                }
-                else
-                {
-                    this._angle -= 90;
-                }
-            }
-            else if (angle == 90)
-            {
-                if (this._angle >= 270)
-                {
-                    this._angle = 0;
-                }
-                else
-                {
-                    this._angle += 90;
-                }
-            }
-        }
+
 
         private void RotateImage(int angle)
         {
@@ -179,6 +139,51 @@ namespace ConsoleWpfAppTest
             _isSaved = false;
         }
 
+        private void ExitWithoutSaving(CancelEventArgs e)
+        {
+            if (!_isSaved)
+            {
+                if (MessageBox.Show("Exit without saving?",
+                        "Close",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    e.Cancel = true;
+                    Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    Save();
+                }
+            }
+        }
+
+        private void ChangeAngle(int angle)
+        {
+            if (angle == -90)
+            {
+                if (this._angle <= 0)
+                {
+                    this._angle = 270;
+                }
+                else
+                {
+                    this._angle -= 90;
+                }
+            }
+            else if (angle == 90)
+            {
+                if (this._angle >= 270)
+                {
+                    this._angle = 0;
+                }
+                else
+                {
+                    this._angle += 90;
+                }
+            }
+        }
+
 
         protected override void OnContentRendered(EventArgs e)
         {
@@ -189,7 +194,6 @@ namespace ConsoleWpfAppTest
         private void SetImage(Uri imagePath)
         {
             _image = new Bitmap(imagePath.AbsolutePath);
-
             Img.Source = BitmapToSource(new Bitmap(_image));
         }
 
@@ -212,7 +216,6 @@ namespace ConsoleWpfAppTest
             image.EndInit();
             return image;
         }
-
 
     }
 }
