@@ -49,7 +49,7 @@ namespace CroppingImageLibrary.Services.Tools
         /// <param name="drawingContext"></param>
         protected override void OnRender(DrawingContext drawingContext)
         {
-            drawingContext.DrawRectangle(Brushes.White, new Pen(Brushes.Black, 2), new Rect(new Size(ThumbSize, ThumbSize)));
+            drawingContext.DrawRectangle(((Brush)(new BrushConverter().ConvertFrom("#7955BF"))), new Pen(((Brush)(new BrushConverter().ConvertFrom("#7955BF"))), 2), new Rect(new Size(ThumbSize, ThumbSize)));
             drawingContext.DrawRectangle(Brushes.Black, new Pen(Brushes.Black, 0), new Rect(2, 2, 6, 6));
         }
     }

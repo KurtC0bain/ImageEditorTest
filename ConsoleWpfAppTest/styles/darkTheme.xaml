@@ -70,6 +70,10 @@
 
     </Style>
 
+    <Style x:Key="grid" TargetType="{x:Type Grid}">
+        <Setter Property="Background" Value="#333333"></Setter>
+    </Style>
+
 
 
     <consoleWpfAppTest:ImageSourceToSizeConverter x:Key="imgSizeConverter"/>

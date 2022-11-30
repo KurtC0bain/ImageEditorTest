@@ -10,43 +10,41 @@
         <Setter Property="Background" Value="#7955BF"></Setter>
         <Setter Property="Foreground" Value="white"></Setter>
         <Setter Property="FontSize" Value="20"></Setter>
-        <Setter Property="FontWeight" Value="DemiBold"></Setter>
+        <Setter Property="FontFamily" Value="Montserrat"></Setter>
+        <Setter Property="FontWeight" Value="Bold"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Left"></Setter>
     </Style>
 
 
     <Style x:Key="btnRotationCw" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource BaseButton}">
         <Setter Property="Width" Value="55"></Setter>
-        <Setter Property="Margin" Value="-6,20,101,20"></Setter>
+        <Setter Property="Margin" Value="5,0,5,0"></Setter>
+
     </Style>
 
     <Style x:Key="btnRotationCcw" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource BaseButton}">
         <Setter Property="Width" Value="55"></Setter>
-        <Setter Property="Margin" Value="101,20,4,20"></Setter>
+        <Setter Property="Margin" Value="5,0,5,0"></Setter>
     </Style>
 
 
     <Style x:Key="btnCrop" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource BaseButton}">
-        <Setter Property="Margin" Value="-127,20,147,20"></Setter>
+        <Setter Property="Margin" Value="5,0,5,0"></Setter>
     </Style>
 
     <Style x:Key="btnReset" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource BaseButton}">
-        <Setter Property="Margin" Value="-49,20,131,20"></Setter>
     </Style>
 
     <Style x:Key="btnSave" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource BaseButton}">
         <Setter Property="Background" Value="#55C151"></Setter>
-        <Setter Property="Margin" Value="-31,20,114,20"></Setter>
     </Style>
-
-
-
 
 
     <Style x:Key="title" TargetType="{x:Type TextBlock}">
         <Setter Property="Margin" Value="20,0,0,10"></Setter>
         <Setter Property="Foreground" Value="#7955BF"></Setter>
         <Setter Property="FontSize" Value="36"></Setter>
-        <Setter Property="FontFamily" Value="Montserrat Alternates"></Setter>
+        <Setter Property="FontFamily" Value="Montserrat"></Setter>
         <Setter Property="FontWeight" Value="Bold"></Setter>
     </Style>
     <Style TargetType="{x:Type Image}">
@@ -62,10 +60,13 @@
         <Setter Property="Width" Value="120"></Setter>
         <Setter Property="HorizontalAlignment" Value="Left"></Setter>
         <Setter Property="FontSize" Value="20"></Setter>
-        <Setter Property="FontFamily" Value="Montserrat Alternates"></Setter>
+        <Setter Property="FontFamily" Value="Montserrat"></Setter>
         <Setter Property="FontWeight" Value="Medium"></Setter>
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
+    </Style>
 
+    <Style x:Key="grid" TargetType="{x:Type Grid}">
+        <Setter Property="Background" Value="#EBEBEB"></Setter>
     </Style>
 
 

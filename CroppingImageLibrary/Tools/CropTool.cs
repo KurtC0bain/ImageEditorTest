@@ -16,8 +16,8 @@ namespace CroppingImageLibrary.Services.Tools
         public double TopLeftY => Canvas.GetTop(_cropShape.Shape);
         public double BottomRightX => Canvas.GetLeft(_cropShape.Shape) + _cropShape.Shape.Width;
         public double BottomRightY => Canvas.GetTop(_cropShape.Shape) + _cropShape.Shape.Height;
-        public int Height => (int)_cropShape.Shape.Height;
-        public int Width => (int)_cropShape.Shape.Width;
+        public double Height => _cropShape.Shape.Height;
+        public double Width => _cropShape.Shape.Width;
 
         public CropTool(Canvas canvas)
         {
@@ -26,14 +26,12 @@ namespace CroppingImageLibrary.Services.Tools
                     Height = 0,
                     Width = 0,
                     Stroke = (Brush)(new BrushConverter().ConvertFrom("#7955BF")),
-                    StrokeThickness = 3
+                    StrokeThickness = 2
                 },
-                new Rectangle { }
-                );
+                new Rectangle{});
 
             _shadeService = new ShadeTool(canvas, this);
             _thumbService = new ThumbTool(canvas, this);
-            _textService = new TextTool(this);
 
             _canvas.Children.Add(_cropShape.Shape);
             _canvas.Children.Add(_cropShape.DashedShape);
@@ -49,8 +47,6 @@ namespace CroppingImageLibrary.Services.Tools
             _canvas.Children.Add(_thumbService.TopRight);
             _canvas.Children.Add(_thumbService.BottomLeft);
             _canvas.Children.Add(_thumbService.BottomRight);
-
-            _canvas.Children.Add(_textService.TextBlock);
         }
 
         public void Redraw(double newX, double newY, double newWidth, double newHeight)
@@ -58,7 +54,6 @@ namespace CroppingImageLibrary.Services.Tools
             _cropShape.Redraw(newX, newY, newWidth, newHeight);
             _shadeService.Redraw();
             _thumbService.Redraw();
-            _textService.Redraw();
         }
     }
 }

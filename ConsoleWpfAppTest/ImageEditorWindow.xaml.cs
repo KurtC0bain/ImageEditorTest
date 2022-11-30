@@ -26,6 +26,7 @@ namespace ConsoleWpfAppTest
         private Bitmap _image;
         private int _angle;
         private bool _isSaved = true;
+        private bool _isRendered = false;
 
 
         public ImageEditorWindow(Uri imagePath)
@@ -114,6 +115,8 @@ namespace ConsoleWpfAppTest
             this.UpdateLayout();
 
             UpdateCropServiceView();
+
+            _isSaved = false;
         }
 
         private void Crop()
@@ -148,6 +151,9 @@ namespace ConsoleWpfAppTest
 
                 UpdateCropServiceView();
 
+                _isSaved = false;
+
+
             }
             catch (Exception e)
             {
@@ -163,27 +169,20 @@ namespace ConsoleWpfAppTest
             this.UpdateLayout();
             UpdateCropServiceView();
 
+            _isSaved = true;
         }
 
         private void Save()
         {
             BitmapImage bi = (BitmapImage)Img.Source;
-            SaveFileDialog save = new()
-            {
-                Title = "Save picture as ",
-                Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp",
-                FileName = "croped_image"
-            };
-            if (save.ShowDialog() == true)
-            {
-                JpegBitmapEncoder jpg = new();
-                jpg.Frames.Add(BitmapFrame.Create(bi));
-                using Stream stm = File.Create(save.FileName);
-                jpg.Save(stm);
-            }
 
+            JpegBitmapEncoder jpg = new();
+            jpg.Frames.Add(BitmapFrame.Create(bi));
 
-            _isSaved = false;
+            using Stream stm = File.Create(_path.AbsolutePath);
+            jpg.Save(stm);
+            
+            _isSaved = true;
         }
 
 
@@ -191,6 +190,7 @@ namespace ConsoleWpfAppTest
         {
             _service = new(Img);
             base.OnContentRendered(e);
+            _isRendered = true;
         }
 
         private void SetImage(Uri imagePath)
@@ -204,7 +204,6 @@ namespace ConsoleWpfAppTest
         {
             AdornerLayer.GetAdornerLayer(Img)?.Remove(_service.Adorner);
             _service = new(Img);
-            _isSaved = false;
         }
 
         private static BitmapImage BitmapToSource(Bitmap src)
@@ -220,6 +219,12 @@ namespace ConsoleWpfAppTest
             return image;
         }
 
-
+        private void Img_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (_isRendered)
+            {
+                UpdateCropServiceView();
+            }
+        }
     }
 }
