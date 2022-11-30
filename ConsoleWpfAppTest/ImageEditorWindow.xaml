@@ -28,9 +28,9 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <TextBox Name="titleText" Style="{StaticResource ResourceKey={x:Type TextBox}}">
+            <TextBlock Name="titleText" Style="{StaticResource title}">
                 Редагування документів
-            </TextBox>
+            </TextBlock>
         </Grid>
 
 

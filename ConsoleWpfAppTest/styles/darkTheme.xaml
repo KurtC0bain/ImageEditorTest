@@ -2,13 +2,16 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:consoleWpfAppTest="clr-namespace:ConsoleWpfAppTest">
 
+    <Style TargetType="Window">
+        <Setter Property="Background" Value="#252525"></Setter>
+    </Style>
 
     <Style x:Key="BaseButton" TargetType="{x:Type ButtonBase}">
         <Setter Property="Margin" Value="2"></Setter>
         <Setter Property="Width" Value="99"></Setter>
         <Setter Property="Height" Value="55"></Setter>
-        <Setter Property="Background" Value="#7955BF"></Setter>
-        <Setter Property="Foreground" Value="white"></Setter>
+        <Setter Property="Background" Value="#6AAFFF"></Setter>
+        <Setter Property="Foreground" Value="#252525"></Setter>
         <Setter Property="FontSize" Value="20"></Setter>
         <Setter Property="FontWeight" Value="DemiBold"></Setter>
     </Style>
@@ -34,17 +37,17 @@
     </Style>
 
     <Style x:Key="btnSave" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource BaseButton}">
-        <Setter Property="Background" Value="#55C151"></Setter>
+        <Setter Property="Background" Value="#55C053"></Setter>
         <Setter Property="Margin" Value="-31,20,114,20"></Setter>
     </Style>
 
 
 
 
-
     <Style x:Key="title" TargetType="{x:Type TextBlock}">
         <Setter Property="Margin" Value="20,0,0,10"></Setter>
-        <Setter Property="Foreground" Value="#7955BF"></Setter>
+        <Setter Property="Foreground" Value="#6AAFFF"></Setter>
+        <Setter Property="Background" Value="#252525"></Setter>
         <Setter Property="FontSize" Value="36"></Setter>
         <Setter Property="FontFamily" Value="Montserrat Alternates"></Setter>
         <Setter Property="FontWeight" Value="Bold"></Setter>
@@ -54,7 +57,6 @@
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Setter Property="Margin" Value="100,10,100,20"></Setter>
     </Style>
-
 
     <Style TargetType="{x:Type Label}">
         <Setter Property="Foreground" Value="#737373"></Setter>

@@ -10,6 +10,9 @@
     <Page Update="ImageEditorWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="styles\darkTheme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="styles\style.xaml">
       <SubType>Designer</SubType>
     </Page>
