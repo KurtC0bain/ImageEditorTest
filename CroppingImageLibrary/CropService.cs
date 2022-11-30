@@ -53,6 +53,20 @@ namespace CroppingImageLibrary.Services
             Debug.Assert(adornerLayer != null, nameof(adornerLayer) + " != null");
             adornerLayer.Add(_cropAdorner);
 
+            var cropShape = new CropShape(
+                new Rectangle
+                {
+                    Height = 0,
+                    Width = 0,
+                    Stroke = Brushes.Black,
+                    StrokeThickness = 1.5
+                },
+                new Rectangle
+                {
+                    Stroke = Brushes.White,
+                    StrokeDashArray = new DoubleCollection(new double[] { 4, 4 })
+                }
+            );
             _cropTool = new CropTool(_canvas);
             _createState = new CreateState(_cropTool, _canvas);
             _completeState = new CompleteState();
