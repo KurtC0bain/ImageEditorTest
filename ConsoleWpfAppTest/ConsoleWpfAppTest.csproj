@@ -9,6 +9,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="icons\download.png" />
+	  <None Remove="icons\rotate-ccw.png" />
+	  <None Remove="icons\rotate-cw.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="System.Drawing.Common" Version="7.0.0" />
 	</ItemGroup>
 
@@ -19,11 +25,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="icons\" />
+	  <ProjectReference Include="..\CroppingImageLibrary\CroppingImageLibrary.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\CroppingImageLibrary\CroppingImageLibrary.csproj" />
+	  <Resource Include="icons\download.png" />
+	  <Resource Include="icons\rotate-ccw.png" />
+	  <Resource Include="icons\rotate-cw.png" />
 	</ItemGroup>
 
 </Project>

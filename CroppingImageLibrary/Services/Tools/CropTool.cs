@@ -25,13 +25,10 @@ namespace CroppingImageLibrary.Services.Tools
             _cropShape = new CropShape(new Rectangle {
                     Height = 0,
                     Width = 0,
-                    Stroke = Brushes.Black,
-                    StrokeThickness = 1.5
+                    Stroke = (Brush)(new BrushConverter().ConvertFrom("#7955BF")),
+                    StrokeThickness = 3
                 },
-                new Rectangle {
-/*                    Stroke = Brushes.White,
-                    StrokeDashArray = new DoubleCollection(new double[] { 4, 4 })
-*/                }
+                new Rectangle { }
                 );
 
             _shadeService = new ShadeTool(canvas, this);
