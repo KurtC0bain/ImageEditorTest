@@ -1,0 +1,76 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:consoleWpfAppTest="clr-namespace:ConsoleWpfAppTest">
+
+
+    <Style x:Key="BaseButton" TargetType="{x:Type ButtonBase}">
+        <Setter Property="Margin" Value="2"></Setter>
+        <Setter Property="Width" Value="99"></Setter>
+        <Setter Property="Height" Value="55"></Setter>
+        <Setter Property="Background" Value="#7955BF"></Setter>
+        <Setter Property="Foreground" Value="white"></Setter>
+        <Setter Property="FontSize" Value="20"></Setter>
+        <Setter Property="FontWeight" Value="DemiBold"></Setter>
+    </Style>
+
+
+    <Style x:Key="btnRotationCw" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource BaseButton}">
+        <Setter Property="Width" Value="55"></Setter>
+        <Setter Property="Margin" Value="-6,20,101,20"></Setter>
+    </Style>
+
+    <Style x:Key="btnRotationCcw" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource BaseButton}">
+        <Setter Property="Width" Value="55"></Setter>
+        <Setter Property="Margin" Value="101,20,4,20"></Setter>
+    </Style>
+
+
+    <Style x:Key="btnCrop" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource BaseButton}">
+        <Setter Property="Margin" Value="-127,20,147,20"></Setter>
+    </Style>
+
+    <Style x:Key="btnReset" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource BaseButton}">
+        <Setter Property="Margin" Value="-49,20,131,20"></Setter>
+    </Style>
+
+    <Style x:Key="btnSave" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource BaseButton}">
+        <Setter Property="Background" Value="#55C151"></Setter>
+        <Setter Property="Margin" Value="-31,20,114,20"></Setter>
+    </Style>
+
+
+
+
+
+    <Style x:Key="title" TargetType="{x:Type TextBlock}">
+        <Setter Property="Margin" Value="20,0,0,10"></Setter>
+        <Setter Property="Foreground" Value="#7955BF"></Setter>
+        <Setter Property="FontSize" Value="36"></Setter>
+        <Setter Property="FontFamily" Value="Montserrat Alternates"></Setter>
+        <Setter Property="FontWeight" Value="Bold"></Setter>
+    </Style>
+    <Style TargetType="{x:Type Image}">
+        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Setter Property="Margin" Value="100,10,100,20"></Setter>
+    </Style>
+
+
+    <Style TargetType="{x:Type Label}">
+        <Setter Property="Foreground" Value="#737373"></Setter>
+        <Setter Property="Margin" Value="13,0,0,0"></Setter>
+        <Setter Property="Width" Value="120"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        <Setter Property="FontSize" Value="20"></Setter>
+        <Setter Property="FontFamily" Value="Montserrat Alternates"></Setter>
+        <Setter Property="FontWeight" Value="Medium"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+
+    </Style>
+
+
+
+    <consoleWpfAppTest:ImageSourceToSizeConverter x:Key="imgSizeConverter"/>
+
+
+</ResourceDictionary>

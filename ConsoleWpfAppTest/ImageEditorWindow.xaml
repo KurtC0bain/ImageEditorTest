@@ -11,28 +11,13 @@
 
     <Window.Resources>
         <ResourceDictionary>
-            <Style x:Key="btn" TargetType="{x:Type ButtonBase}">
-                <Setter Property="Margin" Value="2"></Setter>
-                <Setter Property="Width" Value="99"></Setter>
-                <Setter Property="Height" Value="60"></Setter>
-                <Setter Property="Background" Value="#7955BF"></Setter>
-                <Setter Property="Foreground" Value="white"></Setter>
-                <Setter Property="FontSize" Value="20"></Setter>
-            </Style>
-            <Style x:Key="btnRotation" TargetType="{x:Type ButtonBase}">
-                <Setter Property="Margin" Value="2"></Setter>
-                <Setter Property="Width" Value="60"></Setter>
-                <Setter Property="Height" Value="60"></Setter>
-                <Setter Property="Background" Value="#7955BF"></Setter>
-                <Setter Property="Foreground" Value="white"></Setter>
-                <Setter Property="FontSize" Value="20"></Setter>
-            </Style>
-            <Style TargetType="{x:Type Label}">
-                <Setter Property="VerticalAlignment" Value="Center"></Setter>
-            </Style>
-            <local:ImageSourceToSizeConverter x:Key="imgSizeConverter"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="styles\style.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Image x:Key="Download" Source="icons/download.png"/>
         </ResourceDictionary>
     </Window.Resources>
+
 
     <Grid>
         <Grid.RowDefinitions>
@@ -43,19 +28,19 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <TextBox Name="titleText" BorderThickness="0" Margin="20,0,0,10" Foreground="#7955BF" FontSize="36" FontFamily="Montserrat Alternates" FontWeight="Bold">
+            <TextBlock Name="titleText" Style="{StaticResource title}">
                 Редагування документів
-            </TextBox>
+            </TextBlock>
         </Grid>
 
 
-        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="100,10,100,20">
-            <Image x:Name="Img" Stretch="Uniform">
+        <Grid Grid.Row="1">
+            <Image x:Name="Img" Stretch="Uniform" Style="{StaticResource ResourceKey={x:Type Image}}">
             </Image>
         </Grid>
 
         <Grid Grid.Row="2">
-            <Label Name="labelPath" Foreground="#737373" Grid.Column="0" Margin="13,0,0,0" Width="120" HorizontalAlignment="Left" FontSize="20" FontFamily="Montserrat Alternates" FontWeight="Medium">
+            <Label Name="labelPath" Grid.Column="0" Style="{StaticResource ResourceKey={x:Type Label}}">
                 <Label.Content>
                     <Binding ElementName="Img" Path="Source" Converter="{StaticResource ResourceKey=imgSizeConverter}" />
                 </Label.Content>
@@ -72,57 +57,58 @@
 
 
             <UniformGrid Columns="5" Grid.Column="1">
-                <Button Style="{StaticResource btnRotation}" Click="RotateMinus90_Click" Margin="101,20,4,20">
+                <Button Style="{StaticResource btnRotationCcw}" Click="RotateMinus90_Click" >
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="8"></Setter>
                         </Style>
                     </Button.Resources>
-                    <Image Source="/icons/rotate-ccw.png">
-                    </Image>
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="icons/rotate-ccw.png">
+                        </Image>
+                    </StackPanel>
                 </Button>
-                <Button Style="{StaticResource btnRotation}" Click="RotatePlus90_Click" Margin="-6,20,101,20">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="8"></Setter>
-                        </Style>
-                    </Button.Resources>
-                    <Image Source="pack://application:,,,/icons/rotate-cw.png">
-                    </Image>
-                </Button>
-                <Button Content="Crop" Style="{StaticResource btn}" Click="CropImage_Click" Margin="-127,20,147,20">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="8"></Setter>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button Content="Reset" Style="{StaticResource btn}" Click="Reset_Click" Width="99" Margin="-49,20,131,20">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="8"></Setter>
-                        </Style>
-                    </Button.Resources>
 
+                <Button Style="{StaticResource btnRotationCw}" Click="RotatePlus90_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="8"></Setter>
+                        </Style>
+                    </Button.Resources>
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="icons/rotate-cw.png">
+                        </Image>
+                    </StackPanel>
                 </Button>
-                <Button Click="Save_Click" Width="99" Background="#55C151" Margin="-31,20,114,20">
+
+                <Button Content="Crop" Style="{StaticResource btnCrop}" Click="CropImage_Click">
+                    <Button.Resources >
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="8"></Setter>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <Button Content="Reset" Style="{StaticResource btnReset}" Click="Reset_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="8"></Setter>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <Button Click="Save_Click" Style="{StaticResource btnSave}">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="8"/>
                         </Style>
                     </Button.Resources>
-                    <Button.Style>
-                        <StaticResource ResourceKey="btn"/>
-                    </Button.Style>
-                    <StackPanel HorizontalAlignment="Center">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Width="84"> 
                         <TextBlock>Save</TextBlock>
                         <Image Source="icons/download.png"/>
                     </StackPanel>
-
                 </Button>
-
             </UniformGrid>
-
         </Grid>
     </Grid>
 </Window>
