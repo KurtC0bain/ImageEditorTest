@@ -139,10 +139,17 @@ namespace ConsoleWpfAppTest
             JpegBitmapEncoder jpg = new();
             jpg.Frames.Add(BitmapFrame.Create(bi));
 
-            using Stream stm = File.Create(_path.AbsolutePath);
-            jpg.Save(stm);
-            
+
+            using MemoryStream ms = new();
+            jpg.Save(ms);
+
+            ReleaseImageResources();
+
+
+            File.WriteAllBytes(_path.AbsolutePath, ms.ToArray());
+
             _isSaved = true;
+            this.Close();
         }
 
         private void ExitWithoutSaving(CancelEventArgs e)
@@ -221,6 +228,13 @@ namespace ConsoleWpfAppTest
             image.StreamSource = ms;
             image.EndInit();
             return image;
+        }
+
+        private void ReleaseImageResources()
+        {
+            Img.Source = null;
+            this.UpdateLayout();
+            GC.Collect();
         }
 
         private void Img_SizeChanged(object sender, SizeChangedEventArgs e)

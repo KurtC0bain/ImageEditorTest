@@ -10,7 +10,7 @@
         <Setter Property="Background" Value="#7955BF"></Setter>
         <Setter Property="Foreground" Value="white"></Setter>
         <Setter Property="FontSize" Value="20"></Setter>
-        <Setter Property="FontFamily" Value="Montserrat"></Setter>
+        <Setter Property="FontFamily" Value="Tahoma"></Setter>
         <Setter Property="FontWeight" Value="Bold"></Setter>
         <Setter Property="HorizontalAlignment" Value="Left"></Setter>
     </Style>
@@ -44,7 +44,7 @@
         <Setter Property="Margin" Value="20,0,0,10"></Setter>
         <Setter Property="Foreground" Value="#7955BF"></Setter>
         <Setter Property="FontSize" Value="36"></Setter>
-        <Setter Property="FontFamily" Value="Montserrat"></Setter>
+        <Setter Property="FontFamily" Value="Tahoma"></Setter>
         <Setter Property="FontWeight" Value="Bold"></Setter>
     </Style>
     <Style TargetType="{x:Type Image}">
@@ -60,7 +60,7 @@
         <Setter Property="Width" Value="120"></Setter>
         <Setter Property="HorizontalAlignment" Value="Left"></Setter>
         <Setter Property="FontSize" Value="20"></Setter>
-        <Setter Property="FontFamily" Value="Montserrat"></Setter>
+        <Setter Property="FontFamily" Value="Tahoma"></Setter>
         <Setter Property="FontWeight" Value="Medium"></Setter>
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
     </Style>
