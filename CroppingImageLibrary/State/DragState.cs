@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using CroppingImageLibrary.Services.Tools;
+using CroppingImageLibrary.Tools;
 
-namespace CroppingImageLibrary.Services.State
+namespace CroppingImageLibrary.State
 {
     internal class DragState : IToolState
     {
@@ -24,12 +24,12 @@ namespace CroppingImageLibrary.Services.State
         public Position? OnMouseMove(Point point)
         {
             //see how much the mouse has moved
-            double offsetX = point.X - _lastPoint.X;
-            double offsetY = point.Y - _lastPoint.Y;
+            var offsetX = point.X - _lastPoint.X;
+            var offsetY = point.Y - _lastPoint.Y;
 
             //get the original rectangle parameters
-            double left = _cropTool.TopLeftX;
-            double top = _cropTool.TopLeftY;
+            var left = _cropTool.TopLeftX;
+            var top = _cropTool.TopLeftY;
 
             left += offsetX;
             top += offsetY;

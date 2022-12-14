@@ -2,15 +2,14 @@
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace CroppingImageLibrary.Services.Tools
+namespace CroppingImageLibrary.Tools
 {
     internal class CropTool
     {
-        private readonly Canvas _canvas;
+        private readonly Canvas? _canvas;
         private readonly CropShape _cropShape;
         private readonly ShadeTool _shadeService;
         private readonly ThumbTool _thumbService;
-        private readonly TextTool _textService;
 
         public double TopLeftX => Canvas.GetLeft(_cropShape.Shape);
         public double TopLeftY => Canvas.GetTop(_cropShape.Shape);
@@ -22,13 +21,15 @@ namespace CroppingImageLibrary.Services.Tools
         public CropTool(Canvas canvas)
         {
             _canvas = canvas;
-            _cropShape = new CropShape(new Rectangle {
+            _cropShape = new CropShape(
+                new Rectangle
+                {
                     Height = 0,
                     Width = 0,
-                    Stroke = (Brush)(new BrushConverter().ConvertFrom("#7955BF")),
+                    Stroke = (Brush)new BrushConverter().ConvertFrom("#7955BF")!,
                     StrokeThickness = 2
                 },
-                new Rectangle{});
+                new Rectangle());
 
             _shadeService = new ShadeTool(canvas, this);
             _thumbService = new ThumbTool(canvas, this);

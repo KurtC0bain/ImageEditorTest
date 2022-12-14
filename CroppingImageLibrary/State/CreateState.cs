@@ -1,9 +1,8 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using CroppingImageLibrary.Services.Tools;
+using CroppingImageLibrary.Tools;
 
-namespace CroppingImageLibrary.Services.State
+namespace CroppingImageLibrary.State
 {
     internal class CreateState : IToolState
     {
@@ -25,10 +24,10 @@ namespace CroppingImageLibrary.Services.State
 
         public Position? OnMouseMove(Point point)
         {
-            double left = Math.Min(point.X, _startPoint.X);
-            double top = Math.Min(point.Y, _startPoint.Y);
-            double width = Math.Abs(point.X - _startPoint.X);
-            double height = Math.Abs(point.Y - _startPoint.Y);
+            var left = Math.Min(point.X, _startPoint.X);
+            var top = Math.Min(point.Y, _startPoint.Y);
+            var width = Math.Abs(point.X - _startPoint.X);
+            var height = Math.Abs(point.Y - _startPoint.Y);
 
             SetCreateBorderLimit(ref left, ref top, ref width, ref height);
 

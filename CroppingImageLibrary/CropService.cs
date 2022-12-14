@@ -5,10 +5,10 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using CroppingImageLibrary.Services.State;
-using CroppingImageLibrary.Services.Tools;
+using CroppingImageLibrary.State;
+using CroppingImageLibrary.Tools;
 
-namespace CroppingImageLibrary.Services
+namespace CroppingImageLibrary
 {
     public class CropArea
     {
@@ -81,10 +81,7 @@ namespace CroppingImageLibrary.Services
         }
 
         public CropArea GetCroppedArea() =>
-            new CropArea(
-                _cropAdorner.RenderSize,
-                new Rect(_cropTool.TopLeftX, _cropTool.TopLeftY, _cropTool.Width, _cropTool.Height)
-            );
+            new(_cropAdorner.RenderSize, new Rect(_cropTool.TopLeftX, _cropTool.TopLeftY, _cropTool.Width, _cropTool.Height));
 
         private void AdornerOnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {

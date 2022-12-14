@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Shapes;
 
-namespace CroppingImageLibrary.Services.Tools
+namespace CroppingImageLibrary.Tools
 {
     internal class CropShape
     {

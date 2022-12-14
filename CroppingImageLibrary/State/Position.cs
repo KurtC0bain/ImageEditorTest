@@ -1,9 +1,9 @@
-﻿namespace CroppingImageLibrary.Services.State
+﻿namespace CroppingImageLibrary.State
 {
     internal readonly struct Position
     {
         public double Left { get; }
-        public double Top { get;  }
+        public double Top { get; }
         public double Width { get; }
         public double Height { get; }
 

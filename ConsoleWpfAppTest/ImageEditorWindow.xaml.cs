@@ -1,25 +1,22 @@
 ﻿using System.ComponentModel;
-using System.Windows;
-using System.Windows.Media.Imaging;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using Microsoft.Win32;
-using System.Windows.Documents;
-
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Resources;
-using FontFamily = System.Windows.Media.FontFamily;
+using System.Windows.Documents;
+using System.Windows.Media.Imaging;
+using CroppingImageLibrary;
 using CroppingImageLibrary.Services;
 
 
 namespace ConsoleWpfAppTest
 {
+
     /// <summary>
     /// Interaction logic for ImageEditorWindow.xaml
     /// </summary>
-    public partial class ImageEditorWindow : Window
+    public partial class ImageEditorWindow : UserControl
     {
         private CropService? _service;
 
@@ -27,37 +24,49 @@ namespace ConsoleWpfAppTest
         private Bitmap _image;
         private int _angle;
         private bool _isSaved = true;
-        private bool _isRendered = false;
+        private bool _isRendered;
 
+        public ImageEditorWindow()
+        {
+                
+        }
 
         public ImageEditorWindow(Uri imagePath)
         {
-            Closing += OnWindowClosing;
-
             InitializeComponent();
 
             _path = imagePath;
 
-            SetImage(imagePath);
-        }
+/*            SetImage(imagePath);
+*/        }
 
 
 
-        private void CropImage_Click(object sender, RoutedEventArgs e) => Crop();
-
-        private void RotateMinus90_Click(object sender, RoutedEventArgs e) => RotateImage(-90);
+/*        private void CropImage_Click(object sender, RoutedEventArgs e) => Crop();
+*/
+/*        private void RotateMinus90_Click(object sender, RoutedEventArgs e) => RotateImage(-90);
         private void RotatePlus90_Click(object sender, RoutedEventArgs e) => RotateImage(90);
+*/
+/*        private void Reset_Click(object sender, RoutedEventArgs e) => Reset();
+*/
+/*        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            this.Save();
+            this.SetDialogResult(true);
+        }
+*/
+/*        private void OnWindowClosing(object? sender, CancelEventArgs e)
+        {
+            if (this.SavingQuestion())
+            {
+                this.Save();
+            }
 
-        private void Reset_Click(object sender, RoutedEventArgs e) => Reset();
+            this.SetDialogResult(true);
+        }
+*/
 
-        private void Save_Click(object sender, RoutedEventArgs e) => Save();
-
-        private void OnWindowClosing(object sender, CancelEventArgs e) => ExitWithoutSaving(e);
-
-
-
-
-        private void RotateImage(int angle)
+/*        private void RotateImage(int angle)
         {
             ChangeAngle(angle);
 
@@ -78,20 +87,20 @@ namespace ConsoleWpfAppTest
 
             _isSaved = false;
         }
-
-        private void Crop()
+*/
+/*        private void Crop()
         {
             try
             {
                 var cropArea = _service!.GetCroppedArea();
 
                 var coef = _image.Height / cropArea.OriginalSize.Height;
-                
+
 
                 int realHeight = (int)(cropArea.CroppedRectAbsolute.Height * coef);
                 int realWidth = (int)(cropArea.CroppedRectAbsolute.Width * coef);
 
-                var cropRect = new Rectangle((int)(cropArea.CroppedRectAbsolute.TopLeft.X * coef),
+                var cropRect = new System.Drawing.Rectangle((int)(cropArea.CroppedRectAbsolute.TopLeft.X * coef),
                     (int)(cropArea.CroppedRectAbsolute.TopLeft.Y * coef), realWidth,
                     realHeight);
 
@@ -120,8 +129,8 @@ namespace ConsoleWpfAppTest
                 MessageBox.Show("Crop error!");
             }
         }
-
-        private void Reset()
+*/
+/*        private void Reset()
         {
             SetImage(_path);
             this._angle = 0;
@@ -131,45 +140,52 @@ namespace ConsoleWpfAppTest
 
             _isSaved = true;
         }
-
-        private void Save()
+*/
+/*        private byte[] GetImageBytes()
         {
-            BitmapImage bi = (BitmapImage)Img.Source;
+            var bi = (BitmapImage)Img.Source;
 
             JpegBitmapEncoder jpg = new();
             jpg.Frames.Add(BitmapFrame.Create(bi));
 
-
-            using MemoryStream ms = new();
+            using var ms = new MemoryStream();
             jpg.Save(ms);
 
-            ReleaseImageResources();
+            return ms.ToArray();
+        }
+*/
 
 
-            File.WriteAllBytes(_path.AbsolutePath, ms.ToArray());
+/*        private void Save()
+        {
+            var bytes = this.GetImageBytes();
+
+            this.ReleaseImageResources();
 
             _isSaved = true;
-            this.Close();
-        }
 
-        private void ExitWithoutSaving(CancelEventArgs e)
+            File.WriteAllBytes($"{_path.AbsolutePath}.tmp", bytes);
+        }
+*/
+
+        private bool SavingQuestion()
         {
             if (!_isSaved)
             {
-                if (MessageBox.Show("Exit without saving?",
-                        "Close",
-                        MessageBoxButton.YesNo,
-                        MessageBoxImage.Question) == MessageBoxResult.Yes)
+                var msgBoxResult = MessageBox.Show("Зберегти зміни?", "Збереження",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (msgBoxResult == MessageBoxResult.Yes)
                 {
-                    e.Cancel = true;
-                    Visibility = Visibility.Hidden;
-                }
-                else
-                {
-                    Save();
+                    return true;
                 }
             }
+
+            return false;
         }
+
+
 
         private void ChangeAngle(int angle)
         {
@@ -198,14 +214,14 @@ namespace ConsoleWpfAppTest
         }
 
 
-        protected override void OnContentRendered(EventArgs e)
+        /*protected override void OnContentRendered(EventArgs e)
         {
-            _service = new(Img);
+            _service = new CropService(Img);
             base.OnContentRendered(e);
             _isRendered = true;
-        }
+        }*/
 
-        private void SetImage(Uri imagePath)
+/*        private void SetImage(Uri imagePath)
         {
             _image = new Bitmap(imagePath.AbsolutePath);
             Img.Source = BitmapToSource(new Bitmap(_image));
@@ -214,7 +230,7 @@ namespace ConsoleWpfAppTest
         private void UpdateCropServiceView()
         {
             AdornerLayer.GetAdornerLayer(Img)?.Remove(_service.Adorner);
-            _service = new(Img);
+            _service = new CropService(Img);
         }
 
         private static BitmapImage BitmapToSource(Bitmap src)
@@ -237,12 +253,21 @@ namespace ConsoleWpfAppTest
             GC.Collect();
         }
 
-        private void Img_SizeChanged(object sender, SizeChangedEventArgs e)
+*/        
+/*        private void Img_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (_isRendered)
             {
                 UpdateCropServiceView();
             }
+        }
+*/
+        //private void SetDialogResult(bool success) => this.DialogResult = success;
+
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            File.Move($"{_path.AbsolutePath}.tmp", _path.AbsolutePath, overwrite: true);
         }
     }
 }

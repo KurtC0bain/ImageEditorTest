@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace CroppingImageLibrary.Services.Tools
+namespace CroppingImageLibrary.Tools
 {
     internal class ShadeTool
     {
@@ -23,8 +23,7 @@ namespace CroppingImageLibrary.Services.Tools
             };
 
             var geometryGroup = new GeometryGroup();
-            RectangleGeometry geometry1 =
-                new RectangleGeometry(new Rect(new Size(canvas.Width, canvas.Height)));
+            var geometry1 = new RectangleGeometry(new Rect(new Size(canvas.Width, canvas.Height)));
             _rectangleGeo = new RectangleGeometry(
                 new Rect(
                     _cropTool.TopLeftX,

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace CroppingImageLibrary.Services.State
+namespace CroppingImageLibrary.State
 {
     internal interface IToolState
     {

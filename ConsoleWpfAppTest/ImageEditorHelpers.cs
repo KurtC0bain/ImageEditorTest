@@ -1,13 +1,25 @@
-﻿namespace ConsoleWpfAppTest;
+﻿using System.IO;
+using ConsoleWpfAppTest.mvvm;
 
-internal class ImageEditorHelpers
+namespace ConsoleWpfAppTest;
+
+public static class ImageEditorHelpers
 {
-    public static void OpenDialog(Uri imagePath)
+    public static bool OpenDialog(Uri imagePath)
     {
+        var result = false;
+
+        if (!File.Exists(imagePath.AbsolutePath))
+        {
+            throw new ArgumentException("File not found", nameof(imagePath));
+        }
+
         ThreadHelpers.FromSta(() =>
         {
-            var window = new ImageEditorWindow(imagePath);
-            window.ShowDialog();
+            var window = new MainWindow(imagePath);
+            result = window.ShowDialog() ?? false;
         }, wait: true);
+
+        return result;
     }
 }

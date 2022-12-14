@@ -4,7 +4,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace CroppingImageLibrary.Services.Tools
+namespace CroppingImageLibrary.Tools
 {
     internal class ThumbCrop : Thumb
     {
@@ -18,13 +18,13 @@ namespace CroppingImageLibrary.Services.Tools
 
         private void ThumbCrop_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            ThumbCrop thumb = sender as ThumbCrop;
+            var thumb = sender as ThumbCrop;
             thumb?.ReleaseMouseCapture();
         }
 
         private void ThumbCrop_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ThumbCrop thumb = sender as ThumbCrop;
+            var thumb = sender as ThumbCrop;
             thumb?.CaptureMouse();
         }
 
@@ -49,7 +49,16 @@ namespace CroppingImageLibrary.Services.Tools
         /// <param name="drawingContext"></param>
         protected override void OnRender(DrawingContext drawingContext)
         {
-            drawingContext.DrawRectangle(((Brush)(new BrushConverter().ConvertFrom("#7955BF"))), new Pen(((Brush)(new BrushConverter().ConvertFrom("#7955BF"))), 2), new Rect(new Size(ThumbSize, ThumbSize)));
+            //var pen = new Pen((Brush)new BrushConverter().ConvertFrom("#7955BF")!, 2);
+
+            //drawingContext.DrawLine(pen, new Point(0, 0), new Point(0, ThumbSize));
+            //drawingContext.DrawLine(pen, new Point(0, 0), new Point(ThumbSize, 0));
+
+            drawingContext.DrawRectangle(
+                (Brush)new BrushConverter().ConvertFrom("#7955BF")!,
+                new Pen((Brush)new BrushConverter().ConvertFrom("#7955BF")!, 2),
+                new Rect(new Size(ThumbSize, ThumbSize)));
+
             drawingContext.DrawRectangle(Brushes.Black, new Pen(Brushes.Black, 0), new Rect(2, 2, 6, 6));
         }
     }
@@ -93,131 +102,131 @@ namespace CroppingImageLibrary.Services.Tools
 
         private void BottomRight_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            ThumbCrop thumb = sender as ThumbCrop;
+            var thumb = sender as ThumbCrop;
 
-            double resultThumbLeft = Canvas.GetLeft(thumb) + e.HorizontalChange;
+            var resultThumbLeft = Canvas.GetLeft(thumb) + e.HorizontalChange;
 
             if (resultThumbLeft > _canvas.ActualWidth)
                 resultThumbLeft = _canvas.ActualWidth;
 
-            double thumbResultTop = Canvas.GetTop(thumb) + e.VerticalChange;
+            var thumbResultTop = Canvas.GetTop(thumb) + e.VerticalChange;
             if (thumbResultTop + _thumbSize / 2 > _canvas.ActualHeight)
                 thumbResultTop = _canvas.ActualHeight - _thumbSize / 2;
 
-            double resultHeight = thumbResultTop - _cropTool.TopLeftY + _thumbSize / 2;
-            double resultWidth = resultThumbLeft - _cropTool.TopLeftX;
+            var resultHeight = thumbResultTop - _cropTool.TopLeftY + _thumbSize / 2;
+            var resultWidth = resultThumbLeft - _cropTool.TopLeftX;
 
             _cropTool.Redraw(_cropTool.TopLeftX, _cropTool.TopLeftY, resultWidth, resultHeight);
         }
 
         private void BottomLeft_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            ThumbCrop thumb = sender as ThumbCrop;
+            var thumb = sender as ThumbCrop;
 
-            double thumbResultTop = Canvas.GetTop(thumb) + e.VerticalChange;
+            var thumbResultTop = Canvas.GetTop(thumb) + e.VerticalChange;
             if (thumbResultTop + _thumbSize / 2 > _canvas.ActualHeight)
                 thumbResultTop = _canvas.ActualHeight - _thumbSize / 2;
 
-            double resultHeight = thumbResultTop - _cropTool.TopLeftY + _thumbSize / 2;
+            var resultHeight = thumbResultTop - _cropTool.TopLeftY + _thumbSize / 2;
 
-            double resultThumbLeft = Canvas.GetLeft(thumb) + e.HorizontalChange;
+            var resultThumbLeft = Canvas.GetLeft(thumb) + e.HorizontalChange;
             if (resultThumbLeft < 0)
                 resultThumbLeft = -_thumbSize / 2;
 
-            double offset = Canvas.GetLeft(thumb) - resultThumbLeft;
-            double resultLeft = resultThumbLeft + _thumbSize / 2;
-            double resultWidth = _cropTool.Width + offset;
+            var offset = Canvas.GetLeft(thumb) - resultThumbLeft;
+            var resultLeft = resultThumbLeft + _thumbSize / 2;
+            var resultWidth = _cropTool.Width + offset;
             _cropTool.Redraw(resultLeft, _cropTool.TopLeftY, resultWidth, resultHeight);
         }
 
         private void TopRight_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            ThumbCrop thumb = sender as ThumbCrop;
-            double newTop = Canvas.GetTop(thumb) + e.VerticalChange;
-            double newLeft = Canvas.GetLeft(thumb) + e.HorizontalChange;
+            var thumb = sender as ThumbCrop;
+            var newTop = Canvas.GetTop(thumb) + e.VerticalChange;
+            var newLeft = Canvas.GetLeft(thumb) + e.HorizontalChange;
 
             if (newTop < 0)
                 newTop = -_thumbSize / 2;
 
-            double offset = Canvas.GetTop(thumb) - newTop;
-            double resultHeight = _cropTool.Height + offset;
-            double resultTop = newTop + _thumbSize / 2;
+            var offset = Canvas.GetTop(thumb) - newTop;
+            var resultHeight = _cropTool.Height + offset;
+            var resultTop = newTop + _thumbSize / 2;
 
 
 
             if (newLeft > _canvas.ActualWidth)
                 newLeft = _canvas.ActualWidth;
 
-            double resultWidth = newLeft - _cropTool.TopLeftX;
+            var resultWidth = newLeft - _cropTool.TopLeftX;
             _cropTool.Redraw(_cropTool.TopLeftX, resultTop, resultWidth, resultHeight);
         }
 
         private void TopLeft_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            ThumbCrop thumb = sender as ThumbCrop;
-            double newTop = Canvas.GetTop(thumb) + e.VerticalChange;
-            double newLeft = Canvas.GetLeft(thumb) + e.HorizontalChange;
+            var thumb = sender as ThumbCrop;
+            var newTop = Canvas.GetTop(thumb) + e.VerticalChange;
+            var newLeft = Canvas.GetLeft(thumb) + e.HorizontalChange;
 
             if (newTop < 0)
                 newTop = -_thumbSize / 2;
             if (newLeft < 0)
                 newLeft = -_thumbSize / 2;
 
-            double offsetTop = Canvas.GetTop(thumb) - newTop;
-            double resultHeight = _cropTool.Height + offsetTop;
-            double resultTop = newTop + _thumbSize / 2;
+            var offsetTop = Canvas.GetTop(thumb) - newTop;
+            var resultHeight = _cropTool.Height + offsetTop;
+            var resultTop = newTop + _thumbSize / 2;
 
-            double offsetLeft = Canvas.GetLeft(thumb) - newLeft;
-            double resultLeft = newLeft + _thumbSize / 2;
-            double resultWidth = _cropTool.Width + offsetLeft;
+            var offsetLeft = Canvas.GetLeft(thumb) - newLeft;
+            var resultLeft = newLeft + _thumbSize / 2;
+            var resultWidth = _cropTool.Width + offsetLeft;
 
             _cropTool.Redraw(resultLeft, resultTop, resultWidth, resultHeight);
         }
 
         private void RightMiddle_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            ThumbCrop thumb = sender as ThumbCrop;
-            double resultThumbLeft = Canvas.GetLeft(thumb) + e.HorizontalChange;
+            var thumb = sender as ThumbCrop;
+            var resultThumbLeft = Canvas.GetLeft(thumb) + e.HorizontalChange;
 
             if (resultThumbLeft > _canvas.ActualWidth)
                 resultThumbLeft = _canvas.ActualWidth;
 
-            double resultWidth = resultThumbLeft - _cropTool.TopLeftX;
+            var resultWidth = resultThumbLeft - _cropTool.TopLeftX;
             _cropTool.Redraw(_cropTool.TopLeftX, _cropTool.TopLeftY, resultWidth, _cropTool.Height);
         }
 
         private void TopMiddle_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            ThumbCrop thumb = sender as ThumbCrop;
-            double resultThumbTop = Canvas.GetTop(thumb) + e.VerticalChange;
+            var thumb = sender as ThumbCrop;
+            var resultThumbTop = Canvas.GetTop(thumb) + e.VerticalChange;
 
             if (resultThumbTop < 0)
                 resultThumbTop = -_thumbSize / 2;
 
-            double offset = Canvas.GetTop(thumb) - resultThumbTop;
-            double resultHeight = _cropTool.Height + offset;
-            double resultTop = resultThumbTop + _thumbSize / 2;
+            var offset = Canvas.GetTop(thumb) - resultThumbTop;
+            var resultHeight = _cropTool.Height + offset;
+            var resultTop = resultThumbTop + _thumbSize / 2;
             _cropTool.Redraw(_cropTool.TopLeftX, resultTop, _cropTool.Width, resultHeight);
         }
 
         private void LeftMiddle_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            ThumbCrop thumb = sender as ThumbCrop;
-            double resultThumbLeft = Canvas.GetLeft(thumb) + e.HorizontalChange;
+            var thumb = sender as ThumbCrop;
+            var resultThumbLeft = Canvas.GetLeft(thumb) + e.HorizontalChange;
 
             if (resultThumbLeft < 0)
                 resultThumbLeft = -_thumbSize / 2;
 
-            double offset = Canvas.GetLeft(thumb) - resultThumbLeft;
-            double resultLeft = resultThumbLeft + _thumbSize / 2;
-            double resultWidth = _cropTool.Width + offset;
+            var offset = Canvas.GetLeft(thumb) - resultThumbLeft;
+            var resultLeft = resultThumbLeft + _thumbSize / 2;
+            var resultWidth = _cropTool.Width + offset;
             _cropTool.Redraw(resultLeft, _cropTool.TopLeftY, resultWidth, _cropTool.Height);
         }
 
         private void BottomMiddle_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            ThumbCrop thumb = sender as ThumbCrop;
-            double thumbResultTop = Canvas.GetTop(thumb) + e.VerticalChange;
+            var thumb = sender as ThumbCrop;
+            var thumbResultTop = Canvas.GetTop(thumb) + e.VerticalChange;
 
             if (thumbResultTop > _canvas.ActualHeight)
                 thumbResultTop = _canvas.ActualHeight;

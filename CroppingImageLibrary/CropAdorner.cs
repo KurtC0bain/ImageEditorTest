@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace CroppingImageLibrary.Services
+namespace CroppingImageLibrary
 {
     internal class CropAdorner : Adorner
     {
@@ -23,7 +23,7 @@ namespace CroppingImageLibrary.Services
 
         protected override Size ArrangeOverride(Size size)
         {
-            Size finalSize = base.ArrangeOverride(size);
+            var finalSize = base.ArrangeOverride(size);
             _overlayCanvas.Arrange(new Rect(0, 0, AdornedElement.RenderSize.Width, AdornedElement.RenderSize.Height));
             return finalSize;
         }
