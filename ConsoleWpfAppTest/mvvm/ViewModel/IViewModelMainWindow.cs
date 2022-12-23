@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleWpfAppTest.mvvm.ViewModel
+﻿namespace ConsoleWpfAppTest.mvvm.ViewModel
 {
     public interface IViewModelMainWindow
     {

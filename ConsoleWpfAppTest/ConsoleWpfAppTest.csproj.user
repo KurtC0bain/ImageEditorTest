@@ -5,18 +5,12 @@
     <Compile Update="ImageEditorWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="mvvm\UserControls\ImageControll.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="ImageEditorWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="mvvm\UserControls\ImageControll.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="styles\darkTheme.xaml">

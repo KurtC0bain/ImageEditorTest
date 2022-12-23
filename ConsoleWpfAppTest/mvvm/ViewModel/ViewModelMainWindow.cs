@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace ConsoleWpfAppTest.mvvm.ViewModel
@@ -40,8 +36,7 @@ namespace ConsoleWpfAppTest.mvvm.ViewModel
 
         public ViewModelMainWindow()
         {
-            //Adding items to the collection creates a tab
-            ItemCollection.Add(CreateTab3());
+            ItemCollection.Add(CreateTab());
 
             SelectedTab = ItemCollection.FirstOrDefault();
             ICollectionView view = CollectionViewSource.GetDefaultView(ItemCollection);

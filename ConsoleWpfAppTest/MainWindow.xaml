@@ -5,25 +5,46 @@
         Title="ChromeTabs Demo"
         Height="800"
         Width="1000"
-        xmlns:vm="clr-namespace:ConsoleWpfAppTest.mvvm.ViewModel"
-        xmlns:usercontrols="clr-namespace:ConsoleWpfAppTest.mvvm.UserControls"
         xmlns:ct="clr-namespace:ChromeTabs;assembly=ChromeTabs"
         xmlns:converters="clr-namespace:ChromeTabs.Converters;assembly=ChromeTabs"
+        xmlns:viewModel="clr-namespace:ConsoleWpfAppTest.mvvm.ViewModel"
         MinHeight="600" 
-        MinWidth="800"
-        >
+        MinWidth="800">
+
+    <Window.DataContext>
+        <viewModel:ViewModelMainWindow/>
+    </Window.DataContext>
     <Window.Resources>
-        <ResourceDictionary>
-            <DataTemplate DataType="{x:Type vm:TabClass3}">
-                <usercontrols:ImageControll/>
-            </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:TabViewModel}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="100"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Image x:Name="Img" Stretch="Uniform" Source="{Binding Image}"/>
+                </Grid>
+                <Grid Grid.Row="0">
+                    <Button             
+                        Command="{Binding ScanCommand, UpdateSourceTrigger=PropertyChanged}"
+                        Height="30"
+                        Width="100"
+                        Content="Scan"/>
+                </Grid>
+                <Grid Grid.Row ="1">
+                    <TextBlock>aee</TextBlock>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+        <ResourceDictionary x:Key="Styles">
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary 
-                    Source="/styles/style.xaml"/>
+                <ResourceDictionary Source="styles/style.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
 
+<!--These DataTemplates load the correct user control based on the viewmodel-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
@@ -32,25 +53,25 @@
         </Grid.RowDefinitions>
         <!--The tab control with with tab tearing support.-->
         <Grid Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <TextBlock Name="titleText" Style="{StaticResource title}">
+            <TextBlock Name="titleText" >
                 Редагування документів
             </TextBlock>
         </Grid>
-        <ct:ChromeTabControl  Grid.Row="1" x:Name="MyChromeTabControl"
-                              MaximumTabWidth="200"
-                              TabPersistBehavior="Timed"
-                              TabPersistDuration="0:0:0:5"
-                              AddTabButtonBehavior="OpenNewTab"
-                              Background="AliceBlue"
-                              ItemsSource="{Binding ItemCollection}"
-                              SelectedItem="{Binding SelectedTab}"
-                              CanMoveTabs="{Binding CanMoveTabs}"
-                              DragWindowWithOneTab="True"
-                              IsAddButtonVisible="{Binding ShowAddButton}"
-                              AddTabCommand="{Binding AddTabCommand}"
-                              CloseTabCommand="{Binding CloseTabCommand}"
-                              ReorderTabsCommand="{Binding ReorderTabsCommand}"
-                              TabTearTriggerDistance="10">
+        <ct:ChromeTabControl Grid.Row="1" x:Name="MyChromeTabControl"
+                             MaximumTabWidth="200"
+                             TabPersistBehavior="Timed"
+                             TabPersistDuration="0:0:0:5"
+                             AddTabButtonBehavior="OpenNewTab"
+                             Background="AliceBlue"
+                             ItemsSource="{Binding ItemCollection}"
+                             SelectedItem="{Binding SelectedTab}"
+                             CanMoveTabs="{Binding CanMoveTabs}"
+                             DragWindowWithOneTab="True"
+                             IsAddButtonVisible="{Binding ShowAddButton}"
+                             AddTabCommand="{Binding AddTabCommand}"
+                             CloseTabCommand="{Binding CloseTabCommand}"
+                             ReorderTabsCommand="{Binding ReorderTabsCommand}"
+                             TabTearTriggerDistance="10">
             <!--We override the control template here to show how you can modify the properties of tab panel and content presenter-->
             <ct:ChromeTabControl.Template>
                 <ControlTemplate TargetType="{x:Type ct:ChromeTabControl}">
@@ -64,76 +85,62 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Border Background="{TemplateBinding Background}"
-                                BorderThickness="0,0,0,1"
-                                BorderBrush="#FF999999"
-                                Grid.Row="0"
-                                Padding="10,5,10,0">
+                                    BorderThickness="0,0,0,1"
+                                    BorderBrush="#FF999999"
+                                    Grid.Row="0"
+                                    Padding="10,5,10,0">
                             <ct:ChromeTabPanel IsItemsHost="True"
-                                               Background="{TemplateBinding Background}" />
+                                                   Background="{TemplateBinding Background}" />
                         </Border>
 
                         <Grid Grid.Row="1"
-                              Visibility="{TemplateBinding TabPersistBehavior,Converter={StaticResource TabPersistBehaviorToContentPresenterVisibilityConverter}}">
+                                  Visibility="{TemplateBinding TabPersistBehavior,Converter={StaticResource TabPersistBehaviorToContentPresenterVisibilityConverter}}">
                             <ContentPresenter Content="{TemplateBinding SelectedContent}" />
                         </Grid>
                         <Grid x:Name="PART_ItemsHolder"
-                              Grid.Row="1"
-                              Visibility="{TemplateBinding TabPersistBehavior,Converter={StaticResource TabPersistBehaviorToItemHolderVisibilityConverter}}" />
+                                  Grid.Row="1"
+                                  Visibility="{TemplateBinding TabPersistBehavior,Converter={StaticResource TabPersistBehaviorToItemHolderVisibilityConverter}}" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="239*"/>
+                                <ColumnDefinition Width="111*"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
                     </Grid>
                 </ControlTemplate>
-
             </ct:ChromeTabControl.Template>
             <!--We must override the item template to show our tab name in the header. Here we use a simple
-            textblock, but you could put any combination of controls here. Uncomment the orange border to show
-            the bounds of the header content presenter-->
+                textblock, but you could put any combination of controls here. Uncomment the orange border to show
+                the bounds of the header content presenter-->
             <ct:ChromeTabControl.ItemTemplate>
                 <DataTemplate>
                     <Grid Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type ct:ChromeTabItem}}}">
-
-                        <!--<Border BorderBrush="Orange"
-                                BorderThickness="1">-->
                         <StackPanel Orientation="Horizontal"
                                     Background="Transparent">
                             <Image Source="{Binding TabIcon}"
-                                   Stretch="Fill"
-                                       Margin="5,5,5,5" />
+                                       Stretch="Fill"
+                                           Margin="5,5,5,5" />
                             <TextBlock Text="{Binding TabName}"
-                                       TextWrapping="NoWrap"
-                                       TextTrimming="CharacterEllipsis"
-                                       VerticalAlignment="Center" />
+                                           TextWrapping="NoWrap"
+                                           TextTrimming="CharacterEllipsis"
+                                           VerticalAlignment="Center" />
                         </StackPanel>
-                        <!--</Border>-->
-
-                        <!--We can implement a context menu for the header here. The ChromeTabItems expose for convenience the following commands, "CloseTabCommand: close the current tab, "CloseAllTabsCommand", and "CloseOtherTabsCommand", which closes all tabs except the current.-->
-                        <Grid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Close"
-                                          Command="{Binding Path=PlacementTarget.Tag.CloseTabCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                          CommandTarget="{Binding Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
-                                <MenuItem Header="Close all"
-                                          Command="{Binding Path=PlacementTarget.Tag.CloseAllTabsCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                          CommandTarget="{Binding Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
-                                <MenuItem Header="Close other tabs"
-                                          Command="{Binding Path=PlacementTarget.Tag.CloseOtherTabsCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                          CommandTarget="{Binding Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                          CommandParameter="{Binding}" />
-
-                            </ContextMenu>
-                        </Grid.ContextMenu>
                     </Grid>
                 </DataTemplate>
             </ct:ChromeTabControl.ItemTemplate>
         </ct:ChromeTabControl>
+
+
+
         <Grid Grid.Row="2" Margin="20,0,20,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>   
                 <ColumnDefinition Width="1.25*"/>
                 <ColumnDefinition Width="0.65*"/>
                 <ColumnDefinition Width="0.7*"/>
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <Button Style="{StaticResource btnRotationCcw}">
+                <Button >
                     <Button.Resources>
                         <ResourceDictionary>
                             <Style TargetType="Border">
@@ -149,7 +156,7 @@
                     </Button.ContentTemplate>
                 </Button>
 
-                <Button Grid.Column="2" Style="{StaticResource btnRotationCw}">
+                <Button Grid.Column="2">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="8"></Setter>
@@ -163,7 +170,7 @@
                     </Button.ContentTemplate>
                 </Button>
 
-                <Button Grid.Column="3" Content="Crop" Style="{StaticResource btnCrop}">
+                <Button Grid.Column="3" Content="Crop">
                     <Button.Resources >
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="8"></Setter>
@@ -173,7 +180,7 @@
 
             </StackPanel>
 
-            <Button Grid.Column="2" Content="Reset" Style="{StaticResource btnReset}" >
+            <Button Grid.Column="2" Content="Reset">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="8"></Setter>
@@ -181,7 +188,7 @@
                 </Button.Resources>
             </Button>
 
-            <Button Grid.Column="3" Style="{StaticResource btnSave}" >
+            <Button Grid.Column="3" >
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="8"/>
@@ -194,6 +201,5 @@
             </Button>
 
         </Grid>
-
     </Grid>
 </Window>

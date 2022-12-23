@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Formats.Asn1;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 using ChromeTabs;
-using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight;
-
+using GalaSoft.MvvmLight.Command;
 
 namespace ConsoleWpfAppTest.mvvm.ViewModel
 {
@@ -21,12 +16,12 @@ namespace ConsoleWpfAppTest.mvvm.ViewModel
         //since we don't know what kind of objects are bound, so the sorting happens outside with the ReorderTabsCommand.
         public RelayCommand<TabReorder> ReorderTabsCommand { get; set; }
         public RelayCommand AddTabCommand { get; set; }
-        public RelayCommand<TabBase> CloseTabCommand { get; set; }
-        public ObservableCollection<TabBase> ItemCollection { get; set; }
+        public RelayCommand<TabViewModel> CloseTabCommand { get; set; }
+        public ObservableCollection<TabViewModel> ItemCollection { get; set; }
 
         //This is the current selected tab, if you change it, the tab is selected in the tab control.
-        private TabBase _selectedTab;
-        public TabBase SelectedTab
+        private TabViewModel _selectedTab;
+        public TabViewModel SelectedTab
         {
             get => _selectedTab;
             set
@@ -53,17 +48,17 @@ namespace ConsoleWpfAppTest.mvvm.ViewModel
 
         public ViewModelExampleBase()
         {
-            ItemCollection = new ObservableCollection<TabBase>();
+            ItemCollection = new ObservableCollection<TabViewModel>();
             ItemCollection.CollectionChanged += ItemCollection_CollectionChanged;
             ReorderTabsCommand = new RelayCommand<TabReorder>(ReorderTabsCommandAction);
-            AddTabCommand = new RelayCommand(AddTabCommandAction, () => CanAddTabs);
-            CloseTabCommand = new RelayCommand<TabBase>(CloseTabCommandAction);
+            AddTabCommand = new RelayCommand(AddTabCommandAction,()=>CanAddTabs);
+            CloseTabCommand = new RelayCommand<TabViewModel>(CloseTabCommandAction);
             CanAddTabs = true;
         }
 
-        protected TabClass3 CreateTab3()
+        protected TabViewModel CreateTab()
         {
-            var tab = new TabClass3 { TabName = "Tab class 3", MyStringContent = "Photo", MyImageUrl = new Uri("/Resources/img1.jpg", UriKind.Relative)};
+            var tab = new TabViewModel { TabName = "Tab class 3"};
             return tab;
         }
         /// <summary>
@@ -75,7 +70,7 @@ namespace ConsoleWpfAppTest.mvvm.ViewModel
             ICollectionView view = CollectionViewSource.GetDefaultView(ItemCollection);
             int from = reorder.FromIndex;
             int to = reorder.ToIndex;
-            var tabCollection = view.Cast<TabBase>().ToList();//Get the ordered collection of our tab control
+            var tabCollection = view.Cast<TabViewModel>().ToList();//Get the ordered collection of our tab control
 
             tabCollection[from].TabNumber = tabCollection[to].TabNumber; //Set the new index of our dragged tab
 
@@ -102,7 +97,7 @@ namespace ConsoleWpfAppTest.mvvm.ViewModel
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                foreach (TabBase tab in e.NewItems)
+                foreach (TabViewModel tab in e.NewItems)
                 {
                     if (ItemCollection.Count > 1)
                     {
@@ -116,22 +111,22 @@ namespace ConsoleWpfAppTest.mvvm.ViewModel
             {
                 ICollectionView view = CollectionViewSource.GetDefaultView(ItemCollection);
                 view.Refresh();
-                var tabCollection = view.Cast<TabBase>().ToList();
+                var tabCollection = view.Cast<TabViewModel>().ToList();
                 foreach (var item in tabCollection)
                     item.TabNumber = tabCollection.IndexOf(item);
             }
         }
 
         //To close a tab, we simply remove the viewmodel from the source collection.
-        private void CloseTabCommandAction(TabBase vm)
+        private void CloseTabCommandAction(TabViewModel vm)
         {
             ItemCollection.Remove(vm);
         }
 
         //Adds a random tab
         private void AddTabCommandAction()
-        {
-            ItemCollection.Add(CreateTab3());
+        { 
+            ItemCollection.Add(CreateTab());
         }
     }
 }

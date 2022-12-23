@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using ConsoleWpfAppTest.mvvm;
+using ConsoleWpfAppTest;
 
 namespace ConsoleWpfAppTest;
 

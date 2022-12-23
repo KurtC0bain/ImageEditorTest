@@ -75,9 +75,4 @@
         <Setter Property="Background" Value="#333333"></Setter>
     </Style>
 
-
-
-    <userControls:ImageSourceToSizeConverter x:Key="imgSizeConverter"/>
-
-
 </ResourceDictionary>

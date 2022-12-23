@@ -72,7 +72,4 @@
 
 
 
-    <userControls:ImageSourceToSizeConverter x:Key="imgSizeConverter"/>
-
-
 </ResourceDictionary>
